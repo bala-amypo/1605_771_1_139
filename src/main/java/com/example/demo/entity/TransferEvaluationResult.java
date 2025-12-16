@@ -7,5 +7,6 @@ public class TransferEvaluationResult {
     private Double overlapPercentage;
     private Integer creditHourDifference;
     private Boolean isEligibleForTransfer;
-    private Timestamp evalu
+    private Timestamp evaluatedAt;
+    private String notes;
 }
