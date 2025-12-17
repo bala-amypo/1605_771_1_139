@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 public class TransferEvaluationResult {
+    @Id @GeneratedValue
     private Long id;
     private Course sourceCourse;
     private Course targetCourse;
