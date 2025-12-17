@@ -10,5 +10,12 @@ public class User {
     private String password;
     private String roles;
     private LocalDateTime createdAt;
-    
+    public User(){}
+    public User(int id, String name,String email, String course, int age){
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
+        this. = ;
+    }
 }
