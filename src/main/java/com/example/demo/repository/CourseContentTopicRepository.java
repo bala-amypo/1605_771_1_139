@@ -1,6 +1,6 @@
 package com.example.demo.repository;
 
-@Repository
-public interface CourseContentTopic {
+
+public class CourseContentTopic {
     
 }
