@@ -1,8 +1,6 @@
 package com.example.demo.entity;
 
-
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = "name"))
 public class University {
     @Id @GeneratedValue
     private Long id;
