@@ -1,11 +1,8 @@
 package com.example.demo.entity;
 
-public class TransferEvaluationResult {
-    @Id @GeneratedValue
+public class TransferEvaluationResult { 
     private Long id;
-    @ManyToOne
     private Course sourceCourse;
-    @ManyToOne
     private Course targetCourse;
     private Double overlapPercentage;
     private Integer creditHourDifference;
