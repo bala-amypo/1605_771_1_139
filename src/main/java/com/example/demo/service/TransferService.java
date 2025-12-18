@@ -1,5 +1,5 @@
 package com.example.demo.service;
 
-public interface TransferService{
+public class TransferService{
 
 }           
