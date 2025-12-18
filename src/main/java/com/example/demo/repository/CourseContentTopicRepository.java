@@ -1,6 +1,6 @@
 package com.example.demo.repository;
 
 
-public class CourseContentTopic {
+public class CourseContentTopicRepository {
     
 }
