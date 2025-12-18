@@ -1,6 +1,5 @@
 package com.example.demo.repository;
 
-@Repository
-public interface TransferEvaluationResult {
+public class TransferEvaluationRepository {
     
 }
