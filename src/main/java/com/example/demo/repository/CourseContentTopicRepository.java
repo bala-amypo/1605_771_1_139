@@ -1,6 +1,6 @@
 package com.example.demo.repository;
 
 
-public class CourseContentTopicRepository {
-    
+public interface CourseRepository extends JpaRepository<Course, Long> {
+    Optional<Course> findByCodeIgnoreCase(String code);
 }
