@@ -4,7 +4,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import com.example.demo.entity.TransferEvaluationResult;
 import com.example.demo.exception.ResourceNotFoundException;
-import com.example.demo.exception.ApiExceptionHandler;
 import com.example.demo.repository.TransferEvaluationResultRepository;
 import com.example.demo.service.TransferEvaluationResultService;
 
@@ -19,9 +18,6 @@ public class TransferEvaluationResultServiceImpl implements TransferEvaluationRe
 
     @Override
     public TransferEvaluationResult create(TransferEvaluationResult result) {
-        if (result.getTotalTransferableCredits() == null || result.getTotalTransferableCredits() < 0) {
-            throw new ValidationException("invalid transferable credits");
-        }
         return repository.save(result);
     }
 
