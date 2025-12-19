@@ -1,5 +1,5 @@
 package com.example.demo.repository;
 
-public class TransferEvaluationResultRepository {
-    
+public interface TransferEvaulationResultRepository extends JpaRepository<TransferRequest, Long> {
+    List<TransferRequest> findByStudentId(String studentId);
 }
