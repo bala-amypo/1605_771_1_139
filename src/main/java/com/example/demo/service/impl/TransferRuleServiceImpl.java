@@ -4,7 +4,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import com.example.demo.entity.TransferRule;
 import com.example.demo.exception.ResourceNotFoundException;
-import com.example.demo.exception.ApiExceptionHandler;
 import com.example.demo.repository.TransferRuleRepository;
 import com.example.demo.service.TransferRuleService;
 
@@ -19,10 +18,6 @@ public class TransferRuleServiceImpl implements TransferRuleService {
 
     @Override
     public TransferRule create(TransferRule rule) {
-        if (repository.existsBySourceUniversityIgnoreCaseAndTargetUniversityIgnoreCase(
-                rule.getSourceUniversity(), rule.getTargetUniversity())) {
-            throw new ValidationException("transfer rule already exists");
-        }
         return repository.save(rule);
     }
 
