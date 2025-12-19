@@ -5,6 +5,6 @@ import com.example.demo.entity.User;
 
 
 
-public interface TransferEvaulationResultRepository extends JpaRepository<TransferEvaulationResult, Long> {
+public interface CourseContentTopicRepository extends JpaRepository<TransferEvaulationResult, Long> {
     List<TransferEvaulationResult> findByStudentId(String studentId);
 }
