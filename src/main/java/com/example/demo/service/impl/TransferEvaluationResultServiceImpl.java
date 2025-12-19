@@ -4,7 +4,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import com.example.demo.entity.TransferEvaluationResult;
 import com.example.demo.exception.ResourceNotFoundException;
-import com.example.demo.exception.ValidationException;
+import com.example.demo.exception.ApiExceptionHandler;
 import com.example.demo.repository.TransferEvaluationResultRepository;
 import com.example.demo.service.TransferEvaluationResultService;
 
