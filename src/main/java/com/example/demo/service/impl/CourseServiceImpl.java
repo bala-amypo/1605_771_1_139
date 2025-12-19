@@ -4,7 +4,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import com.example.demo.entity.Course;
 import com.example.demo.exception.ResourceNotFoundException;
-import com.example.demo.exception.ValidationException;
+import com.example.demo.exception.ApiExceptionHandler;
 import com.example.demo.repository.CourseRepository;
 import com.example.demo.service.CourseService;
 
@@ -20,7 +20,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Course create(Course course) {
         if (repository.existsByCodeIgnoreCase(course.getCode())) {
-            throw new ValidationException("course already exists");
+            throw new ApiExceptionHandler("course already exists");
         }
         return repository.save(course);
     }
