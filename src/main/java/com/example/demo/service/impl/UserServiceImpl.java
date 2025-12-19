@@ -5,7 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.example.demo.entity.User;
 import com.example.demo.exception.ResourceNotFoundException;
-import com.example.demo.exception.ApiException;
+import com.example.demo.exception.ApiExceptionHandler;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.UserService;
 
