@@ -3,8 +3,8 @@ package com.example.demo.service.impl;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import com.example.demo.entity.TransferRule;
-import com.example.demo.exception.TransferRuleNotFoundException;
-import com.example.demo.exception.ValidationException;
+import com.example.demo.exception.ResourceNotFoundException;
+import com.example.demo.exception.ApiExceptionHandler;
 import com.example.demo.repository.TransferRuleRepository;
 import com.example.demo.service.TransferRuleService;
 
@@ -29,7 +29,7 @@ public class TransferRuleServiceImpl implements TransferRuleService {
     @Override
     public TransferRule getById(Long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new TransferRuleNotFoundException("transfer rule not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("transfer rule not found"));
     }
 
     @Override
