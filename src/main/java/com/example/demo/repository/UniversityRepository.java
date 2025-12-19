@@ -1,5 +1,10 @@
 package com.example.demo.repository;
 
-public class UniversityRepository {
-    
+import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
+import com.example.demo.entity.User;
+
+public interface UserRepository extends JpaRepository<User, Long> {
+    Optional<User> findByEmailIgnoreCase(String email);
+    boolean existsByEmail(String email);
 }
