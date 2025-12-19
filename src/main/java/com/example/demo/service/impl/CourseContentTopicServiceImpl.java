@@ -4,7 +4,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import com.example.demo.entity.CourseContentTopic;
 import com.example.demo.exception.ResourceNotFoundException;
-import com.example.demo.exception.ValidationException;
 import com.example.demo.repository.CourseContentTopicRepository;
 import com.example.demo.service.CourseContentTopicService;
 
@@ -19,9 +18,6 @@ public class CourseContentTopicServiceImpl implements CourseContentTopicService 
 
     @Override
     public CourseContentTopic create(CourseContentTopic topic) {
-        if (repository.existsByNameIgnoreCase(topic.getName())) {
-            throw new ValidationException("topic already exists");
-        }
         return repository.save(topic);
     }
 
