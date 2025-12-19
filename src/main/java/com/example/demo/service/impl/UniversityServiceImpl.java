@@ -4,7 +4,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import com.example.demo.entity.University;
 import com.example.demo.exception.ResourceNotFoundException;
-import com.example.demo.exception.ValidationException;
+import com.example.demo.exception.ApiExceptionHandler;
 import com.example.demo.repository.UniversityRepository;
 import com.example.demo.service.UniversityService;
 
@@ -20,7 +20,7 @@ public class UniversityServiceImpl implements UniversityService {
     @Override
     public University create(University university) {
         if (repository.existsByNameIgnoreCase(university.getName())) {
-            throw new ValidationException("university already exists");
+            throw new ApiExceptionHandler("university already exists");
         }
         return repository.save(university);
     }
