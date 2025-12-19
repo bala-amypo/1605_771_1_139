@@ -1,0 +1,59 @@
+package com.example.demo.service.impl;
+
+import java.util.List;
+import org.springframework.stereotype.Service;
+import com.example.demo.entity.Course;
+import com.example.demo.exception.CourseNotFoundException;
+import com.example.demo.exception.ValidationException;
+import com.example.demo.repository.CourseRepository;
+import com.example.demo.service.CourseService;
+
+@Service
+public class CourseServiceImpl implements CourseService {
+
+    private final CourseRepository repository;
+
+    public CourseServiceImpl(CourseRepository repository) {
+        this.repository = repository;
+    }
+
+    @Override
+    public Course create(Course course) {
+        if (repository.existsByCodeIgnoreCase(course.getCode())) {
+            throw new ValidationException("course already exists");
+        }
+        return repository.save(course);
+    }
+
+    @Override
+    public Course getById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new CourseNotFoundException("course not found"));
+    }
+
+    @Override
+    public Course getByCode(String code) {
+        return repository.findByCodeIgnoreCase(code)
+                .orElseThrow(() -> new CourseNotFoundException("course not found"));
+    }
+
+    @Override
+    public List<Course> getAll() {
+        return repository.findAll();
+    }
+
+    @Override
+    public Course update(Long id, Course course) {
+        Course existing = getById(id);
+        existing.setCode(course.getCode());
+        existing.setTitle(course.getTitle());
+        existing.setCredits(course.getCredits());
+        return repository.save(existing);
+    }
+
+    @Override
+    public void delete(Long id) {
+        Course existing = getById(id);
+        repository.delete(existing);
+    }
+}
