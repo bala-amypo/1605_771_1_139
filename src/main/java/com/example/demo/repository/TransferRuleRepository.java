@@ -1,9 +1,9 @@
 package com.example.demo.repository;
 
-import java.util.Optional;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.example.demo.entity.User;
+import com.example.demo.entity.TransferEvaluationResult;
 
-public class TransferRuleRepository {
-    
+public interface TransferEvaluationResultRepository extends JpaRepository<TransferEvaluationResult, Long> {
+    List<TransferEvaluationResult> findByStudentId(String studentId);
 }
