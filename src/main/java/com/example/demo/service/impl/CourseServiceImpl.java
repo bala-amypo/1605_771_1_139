@@ -44,4 +44,12 @@ public class CourseServiceImpl implements CourseService {
         existing.setCode(course.getCode());
         existing.setTitle(course.getTitle());
         existing.setCredits(course.getCredits());
-        return repository.save(
+        return repository.save(existing);
+    }
+
+    @Override
+    public void delete(Long id) {
+        Course existing = getById(id);
+        repository.delete(existing);
+    }
+}
