@@ -1,24 +1,24 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.User;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.demo.service.UserService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import java.util.Map;
 
 @RestController
-@RequestMapping("/auth")
-@Tag(name = "Authentication")
+@RequestMapping("/api/auth")
 public class AuthController {
 
-    @PostMapping("/register")
-    public String register(@RequestBody User user) {
-        return "User registered";
+    private final UserService userService;
+
+    public AuthController(UserService userService) {
+        this.userService = userService;
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody User user) {
-        return "JWT_TOKEN";
+    public ResponseEntity<?> login(@RequestBody Map<String, String> payload) {
+        String token = userService.login(payload.get("email"), payload.get("password"));
+        return ResponseEntity.ok(Map.of("token", token));
     }
 }
