@@ -6,24 +6,26 @@ import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.entity.TransferEvaluationResult;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/api/transfer-evaluations")
 @Tag(name = "Transfer Evaluation")
 public class TransferEvaluationController {
 
     @PostMapping("/evaluate/{sourceCourseId}/{targetCourseId}")
-    public TransferEvaluation evaluate(@PathVariable Long sourceCourseId,
-                                       @PathVariable Long targetCourseId) {
+    public TransferEvaluationResult evaluate(@PathVariable Long sourceCourseId,
+                                             @PathVariable Long targetCourseId) {
         return null;
     }
 
     @GetMapping("/{id}")
-    public TransferEvaluation getById(@PathVariable Long id) {
+    public TransferEvaluationResult getById(@PathVariable Long id) {
         return null;
     }
 
     @GetMapping("/course/{courseId}")
-    public List<TransferEvaluation> getByCourse(@PathVariable Long courseId) {
+    public List<TransferEvaluationResult> getByCourse(@PathVariable Long courseId) {
         return null;
     }
 }
