@@ -1,33 +1,31 @@
 package com.example.demo.security;
 
+import io.jsonwebtoken.*;
+import org.springframework.stereotype.Component;
 import java.util.*;
-import java.util.Base64;
 
+@Component
 public class JwtTokenProvider {
+    private final String SECRET = "YourSecretKeyForJWTTokenGenerationMustBeLongEnough";
+    private final long EXPIRATION = 86400000; 
 
     public String createToken(Long userId, String email, Set<String> roles) {
-        return Base64.getEncoder()
-                .encodeToString((userId + ":" + email + ":" + String.join(",", roles)).getBytes());
+        Claims claims = Jwts.claims().setSubject(email);
+        claims.put("userId", userId);
+        claims.put("roles", roles);
+        return Jwts.builder().setClaims(claims).setIssuedAt(new Date())
+            .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION))
+            .signWith(SignatureAlgorithm.HS512, SECRET).compact();
     }
 
     public boolean validateToken(String token) {
         try {
-            Base64.getDecoder().decode(token);
+            Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token);
             return true;
-        } catch (Exception e) {
-            return false;
-        }
+        } catch (Exception e) { return false; }
     }
 
     public String getEmail(String token) {
-        return new String(Base64.getDecoder().decode(token)).split(":")[1];
-    }
-
-    public Long getUserId(String token) {
-        return Long.parseLong(new String(Base64.getDecoder().decode(token)).split(":")[0]);
-    }
-
-    public Set<String> getRoles(String token) {
-        return Set.of(new String(Base64.getDecoder().decode(token)).split(":")[2].split(","));
+        return Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token).getBody().getSubject();
     }
 }
