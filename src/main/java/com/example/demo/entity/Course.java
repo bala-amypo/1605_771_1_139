@@ -1,18 +1,30 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
-@Entity @Table(name = "courses")
+@Entity
+@Table(name = "courses")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Course {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String courseCode;
     private String courseName;
-    private double creditHours;
+    private String university;
+    private int creditHours;
+    private String description;
     private boolean active = true;
 
-    @ManyToOne
-    private University university;
+    // Explicitly defining methods to bypass potential Lombok processing issues
+    public Long getId() { return id; }
+    public String getCourseCode() { return courseCode; }
+    public String getUniversity() { return university; }
+    public int getCreditHours() { return creditHours; }
+    public boolean isActive() { return active; }
+    public void setActive(boolean active) { this.active = active; }
 }

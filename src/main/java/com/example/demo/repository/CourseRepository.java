@@ -1,12 +1,10 @@
 package com.example.demo.repository;
 
-import java.util.*;
-import com.example.demo.entity.*;
+import com.example.demo.entity.Course;
+import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
 
-
-public interface CourseRepository {
-    Optional<Course> findById(Long id);
-    Optional<Course> findByUniversityIdAndCourseCode(Long uid, String code);
-    List<Course> findByUniversityIdAndActiveTrue(Long uid);
-    Course save(Course c);
+public interface CourseRepository extends JpaRepository<Course, Long> {
+    List<Course> findByUniversity(String university);
+    List<Course> findByActiveTrue();
 }
