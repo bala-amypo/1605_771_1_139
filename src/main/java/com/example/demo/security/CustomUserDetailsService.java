@@ -2,33 +2,28 @@ package com.example.demo.security;
 
 import java.util.Set;
 
-public class CustomUserDetails {
+import com.example.demo.entity.User;
+import com.example.demo.repository.UserRepository;
 
-    private Long id;
-    private String username;
-    private String password;
-    private Set<Role> roles;
+public class CustomUserDetailsService {
 
-    public CustomUserDetails(Long id, String username, String password, Set<Role> roles) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.roles = roles;
+    private UserRepository userRepository;
+
+    // Used by testcases via reflection
+    public void setUserRepository(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
-    public Long getId() {
-        return id;
-    }
+    public CustomUserDetails loadUserByUsername(String email) {
 
-    public String getUsername() {
-        return username;
-    }
+        User user = userRepository.findByEmailIgnoreCase(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
-    public String getPassword() {
-        return password;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
+        return new CustomUserDetails(
+                user.getId(),
+                user.getEmail(),
+                user.getPassword(),
+                Set.of(Role.USER)
+        );
     }
 }
