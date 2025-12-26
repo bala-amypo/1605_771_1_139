@@ -1,37 +1,45 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.*;
-import com.example.demo.repository.*;
+import com.example.demo.entity.University;
+import com.example.demo.repository.UniversityRepository;
+import com.example.demo.service.UniversityService;
+import org.springframework.stereotype.Service;
+import java.util.List;
 
-public class UniversityServiceImpl {
+@Service
+public class UniversityServiceImpl implements UniversityService {
+    private final UniversityRepository repo;
 
-    public UniversityRepository repository;
+    public UniversityServiceImpl(UniversityRepository repo) { this.repo = repo; }
 
+    @Override
     public University createUniversity(University u) {
-        if (u.getName() == null || u.getName().isBlank())
+        if (u.getName() == null || u.getName().isEmpty()) {
             throw new IllegalArgumentException("Name required");
-        repository.findByName(u.getName()).ifPresent(x -> {
-            throw new IllegalArgumentException("University already exists");
-        });
-        return repository.save(u);
+        }
+        return repo.save(u);
     }
 
-    public University updateUniversity(Long id, University u) {
-        University ex = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("not found"));
-        ex.setName(u.getName());
-        return repository.save(ex);
-    }
-
+    @Override
     public University getUniversityById(Long id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("not found"));
+        return repo.findById(id).orElseThrow(() -> new RuntimeException("University not found"));
     }
 
+    @Override
+    public List<University> getAllUniversities() { return repo.findAll(); }
+
+    @Override
+    public University updateUniversity(Long id, University u) {
+        University existing = getUniversityById(id);
+        existing.setName(u.getName());
+        existing.setLocation(u.getLocation());
+        return repo.save(existing);
+    }
+
+    @Override
     public void deactivateUniversity(Long id) {
-        University u = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("not found"));
-        u.setActive(false);
-        repository.save(u);
+        University existing = getUniversityById(id);
+        existing.setActive(false);
+        repo.save(existing);
     }
 }
