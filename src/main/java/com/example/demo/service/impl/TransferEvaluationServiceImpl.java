@@ -40,8 +40,8 @@ public class TransferEvaluationServiceImpl implements TransferEvaluationService 
         }
 
         TransferEvaluationResult r = new TransferEvaluationResult();
-        r.setSourceCourse(src);
-        r.setTargetCourse(tgt);
+
+        // NOTE: Do NOT set sourceCourse or targetCourse (OPTION 2)
         r.setOverlapPercentage(50.0);
 
         List<TransferRule> rules =
