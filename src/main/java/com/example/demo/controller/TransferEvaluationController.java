@@ -1,31 +1,19 @@
 package com.example.demo.controller;
 
-import java.util.List;
-
+import com.example.demo.entity.TransferEvaluationResult;
+import com.example.demo.service.TransferEvaluationService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.entity.TransferEvaluationResult;
-
-import io.swagger.v3.oas.annotations.tags.Tag;
-
 @RestController
-@RequestMapping("/api/transfer-evaluations")
-@Tag(name = "Transfer Evaluation")
+@RequestMapping("/api/evaluate")
 public class TransferEvaluationController {
+    private final TransferEvaluationService service;
 
-    @PostMapping("/evaluate/{sourceCourseId}/{targetCourseId}")
-    public TransferEvaluationResult evaluate(@PathVariable Long sourceCourseId,
-                                             @PathVariable Long targetCourseId) {
-        return null;
-    }
+    public TransferEvaluationController(TransferEvaluationService service) { this.service = service; }
 
-    @GetMapping("/{id}")
-    public TransferEvaluationResult getById(@PathVariable Long id) {
-        return null;
-    }
-
-    @GetMapping("/course/{courseId}")
-    public List<TransferEvaluationResult> getByCourse(@PathVariable Long courseId) {
-        return null;
+    @PostMapping
+    public ResponseEntity<TransferEvaluationResult> evaluate(@RequestParam Long sourceId, @RequestParam Long targetId) {
+        return ResponseEntity.ok(service.evaluateTransfer(sourceId, targetId));
     }
 }
