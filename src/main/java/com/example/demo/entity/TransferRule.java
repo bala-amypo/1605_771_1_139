@@ -5,7 +5,7 @@ public class TransferRule {
     private University sourceUniversity;
     private University targetUniversity;
     private Double minimumOverlapPercentage;
-    private Integer creditHourTolerance = 0;
+    private Integer creditHourTolerance;
     private boolean active = true;
 
     public Long getId() { return id; }
