@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.entity.Course;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/api/courses")
 @Tag(name = "Course")
