@@ -20,11 +20,12 @@ public class Course {
     private String description;
     private boolean active = true;
 
-    // Explicitly defining methods to bypass potential Lombok processing issues
+    // Explicit Getters to ensure other services can find them
     public Long getId() { return id; }
     public String getCourseCode() { return courseCode; }
     public String getUniversity() { return university; }
     public int getCreditHours() { return creditHours; }
     public boolean isActive() { return active; }
     public void setActive(boolean active) { this.active = active; }
+    public String getCourseName() { return courseName; }
 }
