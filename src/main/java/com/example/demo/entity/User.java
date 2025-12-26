@@ -1,25 +1,37 @@
 package com.example.demo.entity;
 
-import java.util.Set;
+import jakarta.persistence.*; // use javax.persistence.* if older Spring Boot
 
+@Entity
+@Table(name = "users")
 public class User {
-    private Long id;
-    private String email;
-    private String password;
-    private Set<String> roles;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false, unique = true)
+    private String email;
+
+    // Default constructor
     public User() {}
 
-    public User(String email, String password, Set<String> roles) {
+    // Constructor with fields
+    public User(String name, String email) {
+        this.name = name;
         this.email = email;
-        this.password = password;
-        this.roles = roles;
     }
 
+    // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
     public String getEmail() { return email; }
-    public String getPassword() { return password; }
-    public Set<String> getRoles() { return roles; }
+    public void setEmail(String email) { this.email = email; }
 }
