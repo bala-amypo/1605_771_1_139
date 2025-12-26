@@ -1,19 +1,25 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import java.util.Set;
 
-@Entity
 public class User {
-
-    @Id
     private Long id;
     private String email;
     private String password;
-    private String role;
+    private Set<String> roles;
+
+    public User() {}
+
+    public User(String email, String password, Set<String> roles) {
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
+    }
 
     public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
     public String getEmail() { return email; }
     public String getPassword() { return password; }
-    public String getRole() { return role; }
+    public Set<String> getRoles() { return roles; }
 }
