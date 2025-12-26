@@ -1,6 +1,6 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.*; // use javax.persistence.* if older Spring Boot
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "users")
@@ -16,13 +16,15 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
-    // Default constructor
+    @Column(nullable = false)
+    private String password; // needed for Spring Security
+
     public User() {}
 
-    // Constructor with fields
-    public User(String name, String email) {
+    public User(String name, String email, String password) {
         this.name = name;
         this.email = email;
+        this.password = password;
     }
 
     // Getters and Setters
@@ -34,4 +36,7 @@ public class User {
 
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
+
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
 }
