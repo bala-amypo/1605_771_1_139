@@ -39,7 +39,6 @@ public class UserServiceImpl implements UserService {
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
 
-            // DO NOT use getName() – field does not exist
             user.setEmail(userDetails.getEmail());
             user.setPassword(userDetails.getPassword());
             user.setRole(userDetails.getRole());
@@ -49,5 +48,11 @@ public class UserServiceImpl implements UserService {
         }
 
         return null;
+    }
+
+    
+    @Override
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
     }
 }
