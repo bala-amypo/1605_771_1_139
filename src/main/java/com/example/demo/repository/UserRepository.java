@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.demo.entity.User;
 
-public interface UserRepository extends JpaRepository<User, Long> {
-
-    Optional<User> findByEmailIgnoreCase(String email);
+public interface UserRepository {
+    Optional<User> findByEmail(String email);
+    User save(User u);
 }

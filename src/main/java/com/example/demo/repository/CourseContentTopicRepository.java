@@ -1,14 +1,11 @@
 package com.example.demo.repository;
 
-import java.util.List;
-import java.util.Optional;
-import com.example.demo.entity.CourseContentTopic;
+import java.util.*;
+import com.example.demo.entity.*;
+
 
 public interface CourseContentTopicRepository {
-
     Optional<CourseContentTopic> findById(Long id);
-
-    List<CourseContentTopic> findByCourseId(Long courseId);
-
-    CourseContentTopic save(CourseContentTopic topic);
+    List<CourseContentTopic> findByCourseId(Long cid);
+    CourseContentTopic save(CourseContentTopic t);
 }

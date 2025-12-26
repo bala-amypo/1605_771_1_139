@@ -5,13 +5,7 @@ import java.util.Optional;
 import com.example.demo.entity.TransferRule;
 
 public interface TransferRuleRepository {
-
     Optional<TransferRule> findById(Long id);
-
-    List<TransferRule> findBySourceUniversityIdAndTargetUniversityIdAndActiveTrue(
-            Long sourceUniversityId,
-            Long targetUniversityId
-    );
-
-    TransferRule save(TransferRule rule);
+    List<TransferRule> findBySourceUniversityIdAndTargetUniversityIdAndActiveTrue(Long s, Long t);
+    TransferRule save(TransferRule r);
 }
