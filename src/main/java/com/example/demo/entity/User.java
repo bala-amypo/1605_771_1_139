@@ -5,6 +5,7 @@ import java.util.Set;
 public class User {
     private Long id;
     private String email;
+    @Column(nullable = false)
     private String password;
     private Set<String> roles;
 
@@ -15,6 +16,8 @@ public class User {
         this.password = password;
         this.roles = roles;
     }
+     
+
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
