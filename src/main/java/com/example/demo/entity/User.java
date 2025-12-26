@@ -1,13 +1,14 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import java.util.Set;
 
 @Entity
-@Table(name = "users")
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,13 +16,15 @@ public class User {
 
     @Column(unique = true, nullable = false)
     private String email;
-    private String password;
-    private String role; // e.g., "ROLE_ADMIN"
-    private boolean active = true;
 
-    // Explicitly defining these to ensure the compiler finds them
-    public String getRole() { return role; }
-    public boolean isActive() { return active; }
-    public String getEmail() { return email; }
-    public String getPassword() { return password; }
+    private String password;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    private Set<String> roles;
+
+    public User(String email, String password, Set<String> roles) {
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
+    }
 }
