@@ -1,12 +1,11 @@
 package com.example.demo.service;
-
-import java.util.List;
 import com.example.demo.entity.TransferRule;
+import java.util.List;
 
 public interface TransferRuleService {
-    TransferRule create(TransferRule rule);
-    TransferRule getById(Long id);
-    List<TransferRule> getAll();
-    TransferRule update(Long id, TransferRule rule);
-    void delete(Long id);
+    TransferRule createRule(TransferRule r);
+    TransferRule updateRule(Long id, TransferRule r);
+    TransferRule getRuleById(Long id);
+    List<TransferRule> getRulesForUniversities(Long sourceId, Long targetId);
+    void deactivateRule(Long id);
 }
