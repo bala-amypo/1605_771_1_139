@@ -1,10 +1,14 @@
 package com.example.demo.repository;
 
+import java.util.List;
 import java.util.Optional;
-import org.springframework.data.jpa.repository.JpaRepository;
 import com.example.demo.entity.CourseContentTopic;
 
-public interface CourseContentTopicRepository extends JpaRepository<CourseContentTopic, Long> {
-    Optional<CourseContentTopic> findByNameIgnoreCase(String name);
-    boolean existsByNameIgnoreCase(String name);
+public interface CourseContentTopicRepository {
+
+    Optional<CourseContentTopic> findById(Long id);
+
+    List<CourseContentTopic> findByCourseId(Long courseId);
+
+    CourseContentTopic save(CourseContentTopic topic);
 }
