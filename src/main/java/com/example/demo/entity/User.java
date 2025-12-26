@@ -15,14 +15,13 @@ public class User {
 
     @Column(unique = true, nullable = false)
     private String email;
-    
     private String password;
-    private String role; // ADMIN, EVALUATOR, STUDENT
+    private String role; // e.g., "ROLE_ADMIN"
     private boolean active = true;
 
-    // Explicit methods to ensure compatibility even if Lombok processing fails
-    public String getEmail() { return email; }
-    public String getPassword() { return password; }
+    // Explicitly defining these to ensure the compiler finds them
     public String getRole() { return role; }
     public boolean isActive() { return active; }
+    public String getEmail() { return email; }
+    public String getPassword() { return password; }
 }
