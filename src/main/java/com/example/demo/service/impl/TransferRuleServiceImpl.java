@@ -1,49 +1,61 @@
 package com.example.demo.service.impl;
 
 import java.util.List;
-import org.springframework.stereotype.Service;
+
 import com.example.demo.entity.TransferRule;
-import com.example.demo.exception.ResourceNotFoundException;
+import com.example.demo.entity.University;
 import com.example.demo.repository.TransferRuleRepository;
-import com.example.demo.service.TransferRuleService;
+import com.example.demo.repository.UniversityRepository;
 
-@Service
-public class TransferRuleServiceImpl implements TransferRuleService {
+public class TransferRuleServiceImpl {
 
-    private final TransferRuleRepository repository;
+    private TransferRuleRepository repo;
+    private UniversityRepository univRepo;
 
-    public TransferRuleServiceImpl(TransferRuleRepository repository) {
-        this.repository = repository;
+    public TransferRule createRule(TransferRule r) {
+
+        if (r.getMinimumOverlapPercentage() == null ||
+            r.getMinimumOverlapPercentage() < 0 ||
+            r.getMinimumOverlapPercentage() > 100)
+            throw new IllegalArgumentException("Overlap must be 0-100");
+
+        if (r.getCreditHourTolerance() != null &&
+            r.getCreditHourTolerance() < 0)
+            throw new IllegalArgumentException("Credit tolerance >= 0");
+
+        University s = univRepo.findById(r.getSourceUniversity().getId())
+                .orElseThrow(() -> new RuntimeException("not found"));
+        University t = univRepo.findById(r.getTargetUniversity().getId())
+                .orElseThrow(() -> new RuntimeException("not found"));
+
+        r.setSourceUniversity(s);
+        r.setTargetUniversity(t);
+
+        return repo.save(r);
     }
 
-    @Override
-    public TransferRule create(TransferRule rule) {
-        return repository.save(rule);
+    public TransferRule updateRule(Long id, TransferRule r) {
+        TransferRule existing = repo.findById(id)
+                .orElseThrow(() -> new RuntimeException("not found"));
+
+        existing.setMinimumOverlapPercentage(r.getMinimumOverlapPercentage());
+        existing.setCreditHourTolerance(r.getCreditHourTolerance());
+        return repo.save(existing);
     }
 
-    @Override
-    public TransferRule getById(Long id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("transfer rule not found"));
+    public TransferRule getRuleById(Long id) {
+        return repo.findById(id)
+                .orElseThrow(() -> new RuntimeException("not found"));
     }
 
-    @Override
-    public List<TransferRule> getAll() {
-        return repository.findAll();
+    public List<TransferRule> getRulesForUniversities(Long s, Long t) {
+        return repo.findBySourceUniversityIdAndTargetUniversityIdAndActiveTrue(s, t);
     }
 
-    @Override
-    public TransferRule update(Long id, TransferRule rule) {
-        TransferRule existing = getById(id);
-        existing.setSourceUniversity(rule.getSourceUniversity());
-        existing.setTargetUniversity(rule.getTargetUniversity());
-        existing.setMaxCredits(rule.getMaxCredits());
-        return repository.save(existing);
-    }
-
-    @Override
-    public void delete(Long id) {
-        TransferRule existing = getById(id);
-        repository.delete(existing);
+    public void deactivateRule(Long id) {
+        TransferRule r = repo.findById(id)
+                .orElseThrow(() -> new RuntimeException("not found"));
+        r.setActive(false);
+        repo.save(r);
     }
 }
