@@ -1,17 +1,37 @@
 package com.example.demo.service.impl;
 
-import java.util.List;
+import com.example.demo.entity.*;
+import com.example.demo.repository.*;
 
-import org.springframework.stereotype.Service;
+public class UniversityServiceImpl {
 
-import com.example.demo.entity.University;
-import com.example.demo.service.UniversityService;
+    public UniversityRepository repository;
 
-@Service
-public class UniversityServiceImpl implements UniversityService {
+    public University createUniversity(University u) {
+        if (u.getName() == null || u.getName().isBlank())
+            throw new IllegalArgumentException("Name required");
+        repository.findByName(u.getName()).ifPresent(x -> {
+            throw new IllegalArgumentException("University already exists");
+        });
+        return repository.save(u);
+    }
 
-    @Override
-    public List<University> getAll() {
-        return List.of();
+    public University updateUniversity(Long id, University u) {
+        University ex = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("not found"));
+        ex.setName(u.getName());
+        return repository.save(ex);
+    }
+
+    public University getUniversityById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("not found"));
+    }
+
+    public void deactivateUniversity(Long id) {
+        University u = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("not found"));
+        u.setActive(false);
+        repository.save(u);
     }
 }
