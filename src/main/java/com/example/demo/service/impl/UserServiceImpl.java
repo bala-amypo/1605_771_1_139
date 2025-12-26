@@ -26,9 +26,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User updateUser(Long id, User userDetails) {
-        User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
         user.setEmail(userDetails.getEmail());
-        if (userDetails.getPassword() != null) user.setPassword(passwordEncoder.encode(userDetails.getPassword()));
+        if (userDetails.getPassword() != null) {
+            user.setPassword(passwordEncoder.encode(userDetails.getPassword()));
+        }
         return userRepository.save(user);
     }
 
@@ -36,7 +39,7 @@ public class UserServiceImpl implements UserService {
     public boolean deleteUser(Long id) {
         if (userRepository.existsById(id)) {
             userRepository.deleteById(id);
-            return true;
+            return true; // Fixed: Now returns boolean
         }
         return false;
     }
