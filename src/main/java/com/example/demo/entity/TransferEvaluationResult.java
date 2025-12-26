@@ -1,22 +1,36 @@
 package com.example.demo.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
 public class TransferEvaluationResult {
+
+    @Id
     private Long id;
-    private Boolean isEligibleForTransfer;
-    private Double overlapPercentage;
-    private String notes;
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    private String studentId;
+    private int totalTransferableCredits;
+    private String status;
+    private String remarks;
 
-    public Boolean getIsEligibleForTransfer() { return isEligibleForTransfer; }
-    public void setIsEligibleForTransfer(Boolean isEligibleForTransfer) {
-        this.isEligibleForTransfer = isEligibleForTransfer;
+    public Long getId() {
+        return id;
     }
 
-    public Double getOverlapPercentage() { return overlapPercentage; }
-    public void setOverlapPercentage(Double overlapPercentage) { this.overlapPercentage = overlapPercentage; }
+    public String getStudentId() {
+        return studentId;
+    }
 
-    public String getNotes() { return notes; }
-    public void setNotes(String notes) { this.notes = notes; }
+    public int getTotalTransferableCredits() {
+        return totalTransferableCredits;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
 }
