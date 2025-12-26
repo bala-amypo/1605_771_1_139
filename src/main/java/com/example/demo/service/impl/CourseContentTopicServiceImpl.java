@@ -1,35 +1,49 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.Course;
 import com.example.demo.entity.CourseContentTopic;
 import com.example.demo.repository.CourseContentTopicRepository;
 import com.example.demo.service.CourseContentTopicService;
-import com.example.demo.service.CourseService;
-import com.example.demo.exception.ResourceNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
 public class CourseContentTopicServiceImpl implements CourseContentTopicService {
+    private final CourseContentTopicRepository repo;
 
-    @Autowired private CourseContentTopicRepository topicRepository;
-    @Autowired private CourseService courseService;
+    public CourseContentTopicServiceImpl(CourseContentTopicRepository repo) { this.repo = repo; }
 
     @Override
-    public CourseContentTopic addTopic(Long courseId, CourseContentTopic topic) {
-        Course course = courseService.getCourseById(courseId);
-        topic.setCourse(course);
-        return topicRepository.save(topic);
+    public CourseContentTopic createTopic(CourseContentTopic t) {
+        validateWeight(t.getWeightPercentage());
+        return repo.save(t);
     }
 
     @Override
-    public List<CourseContentTopic> getTopicsByCourseId(Long courseId) {
-        return topicRepository.findByCourseId(courseId);
+    public CourseContentTopic updateTopic(Long id, CourseContentTopic t) {
+        CourseContentTopic existing = getTopicById(id);
+        validateWeight(t.getWeightPercentage());
+        existing.setTopicName(t.getTopicName());
+        existing.setWeightPercentage(t.getWeightPercentage());
+        return repo.save(existing);
+    }
+
+    @Override
+    public CourseContentTopic getTopicById(Long id) {
+        return repo.findById(id).orElseThrow(() -> new RuntimeException("Topic not found"));
+    }
+
+    @Override
+    public List<CourseContentTopic> getTopicsForCourse(Long courseId) {
+        return repo.findByCourseId(courseId);
     }
 
     @Override
     public void deleteTopic(Long id) {
-        topicRepository.deleteById(id);
+        if(!repo.existsById(id)) throw new RuntimeException("Topic not found");
+        repo.deleteById(id);
+    }
+
+    private void validateWeight(double w) {
+        if(w < 0 || w > 100) throw new IllegalArgumentException("Weight must be 0-100");
     }
 }
