@@ -1,20 +1,18 @@
 package com.example.demo.entity;
 
+import jakarta.persistence.*;
+import lombok.Data;
+
+@Entity
+@Data
 public class CourseContentTopic {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String topicName;
-    private Double weightPercentage;
+
+    @ManyToOne(optional = false)
     private Course course;
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
-    public String getTopicName() { return topicName; }
-    public void setTopicName(String topicName) { this.topicName = topicName; }
-
-    public Double getWeightPercentage() { return weightPercentage; }
-    public void setWeightPercentage(Double weightPercentage) { this.weightPercentage = weightPercentage; }
-
-    public Course getCourse() { return course; }
-    public void setCourse(Course course) { this.course = course; }
+    private String topicName;
+    private double weightPercentage; // 0.0 to 100.0
 }
