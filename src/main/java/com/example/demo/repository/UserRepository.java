@@ -1,13 +1,18 @@
 package com.example.demo.repository;
 
-import com.example.demo.entity.User;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import com.example.demo.entity.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    Optional<User> findByEmailIgnoreCase(String email); // Optional for orElseThrow
+    // REQUIRED for FullProjectTest
+    Optional<User> findByEmail(String email);
+
+    // OPTIONAL (used in security)
+    Optional<User> findByEmailIgnoreCase(String email);
 }
