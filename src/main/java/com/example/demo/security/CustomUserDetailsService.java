@@ -5,13 +5,13 @@ import java.util.Set;
 public class CustomUserDetails {
 
     private Long id;
-    private String email;
+    private String username;
     private String password;
     private Set<Role> roles;
 
-    public CustomUserDetails(Long id, String email, String password, Set<Role> roles) {
+    public CustomUserDetails(Long id, String username, String password, Set<Role> roles) {
         this.id = id;
-        this.email = email;
+        this.username = username;
         this.password = password;
         this.roles = roles;
     }
@@ -21,7 +21,7 @@ public class CustomUserDetails {
     }
 
     public String getUsername() {
-        return email;
+        return username;
     }
 
     public String getPassword() {
