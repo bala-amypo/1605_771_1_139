@@ -1,40 +1,36 @@
 package com.example.demo.controller;
 
-import java.util.List;
-
-import org.springframework.web.bind.annotation.*;
-
 import com.example.demo.entity.Course;
-
-import io.swagger.v3.oas.annotations.tags.Tag;
+import com.example.demo.service.CourseService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/courses")
-@Tag(name = "Course")
 public class CourseController {
 
+    @Autowired private CourseService courseService;
+
     @PostMapping
-    public Course create(@RequestBody Course course) {
-        return null;
+    public ResponseEntity<Course> createCourse(@RequestBody Course course) {
+        return ResponseEntity.ok(courseService.saveCourse(course));
     }
 
-    @PutMapping("/{id}")
-    public Course update(@PathVariable Long id,
-                         @RequestBody Course course) {
-        return null;
+    @GetMapping
+    public List<Course> getAllCourses() {
+        return courseService.getAllCourses();
     }
 
     @GetMapping("/{id}")
-    public Course getById(@PathVariable Long id) {
-        return null;
+    public ResponseEntity<Course> getCourse(@PathVariable Long id) {
+        return ResponseEntity.ok(courseService.getCourseById(id));
     }
 
-    @GetMapping("/university/{universityId}")
-    public List<Course> getByUniversity(@PathVariable Long universityId) {
-        return null;
-    }
-
-    @PutMapping("/{id}/deactivate")
-    public void deactivate(@PathVariable Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCourse(@PathVariable Long id) {
+        courseService.deleteCourse(id);
+        return ResponseEntity.noContent().build();
     }
 }
