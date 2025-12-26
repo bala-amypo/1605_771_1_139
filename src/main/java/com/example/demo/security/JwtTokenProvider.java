@@ -1,13 +1,13 @@
 package com.example.demo.security;
 
+import java.util.*;
 import java.util.Base64;
-import java.util.Set;
 
 public class JwtTokenProvider {
 
     public String createToken(Long userId, String email, Set<String> roles) {
-        String raw = userId + ":" + email;
-        return Base64.getEncoder().encodeToString(raw.getBytes());
+        return Base64.getEncoder()
+                .encodeToString((userId + ":" + email + ":" + String.join(",", roles)).getBytes());
     }
 
     public boolean validateToken(String token) {
@@ -20,7 +20,14 @@ public class JwtTokenProvider {
     }
 
     public String getEmail(String token) {
-        String decoded = new String(Base64.getDecoder().decode(token));
-        return decoded.split(":")[1];
+        return new String(Base64.getDecoder().decode(token)).split(":")[1];
+    }
+
+    public Long getUserId(String token) {
+        return Long.parseLong(new String(Base64.getDecoder().decode(token)).split(":")[0]);
+    }
+
+    public Set<String> getRoles(String token) {
+        return Set.of(new String(Base64.getDecoder().decode(token)).split(":")[2].split(","));
     }
 }
