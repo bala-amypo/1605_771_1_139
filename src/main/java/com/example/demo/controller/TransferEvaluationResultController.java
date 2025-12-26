@@ -7,11 +7,23 @@ import org.springframework.web.bind.annotation.*;
 import com.example.demo.entity.TransferEvaluationResult;
 
 @RestController
-@RequestMapping("/transfer-evaluation")
+@RequestMapping("/api/transfer-evaluations")
+@Tag(name = "Transfer Evaluation")
 public class TransferEvaluationController {
 
-    @GetMapping
-    public List<TransferEvaluationResult> getAll() {
-        return List.of();
+    @PostMapping("/evaluate/{sourceCourseId}/{targetCourseId}")
+    public TransferEvaluation evaluate(@PathVariable Long sourceCourseId,
+                                       @PathVariable Long targetCourseId) {
+        return null;
+    }
+
+    @GetMapping("/{id}")
+    public TransferEvaluation getById(@PathVariable Long id) {
+        return null;
+    }
+
+    @GetMapping("/course/{courseId}")
+    public List<TransferEvaluation> getByCourse(@PathVariable Long courseId) {
+        return null;
     }
 }
