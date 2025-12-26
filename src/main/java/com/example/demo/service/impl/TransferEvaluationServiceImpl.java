@@ -1,73 +1,46 @@
 package com.example.demo.service.impl;
 
-import java.util.List;
-
-import com.example.demo.entity.Course;
-import com.example.demo.entity.TransferEvaluationResult;
-import com.example.demo.entity.TransferRule;
-import com.example.demo.repository.CourseContentTopicRepository;
-import com.example.demo.repository.CourseRepository;
-import com.example.demo.repository.TransferEvaluationResultRepository;
-import com.example.demo.repository.TransferRuleRepository;
-import com.example.demo.service.TransferEvaluationService;
-
+import com.example.demo.entity.*;
+import com.example.demo.repository.*;
+import com.example.demo.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 @Service
-public class TransferEvaluationServiceImpl implements TransferEvaluationService {
+public class TransferEvaluationServiceImpl {
+    @Autowired private CourseRepository courseRepo;
+    @Autowired private CourseContentTopicRepository topicRepo;
+    @Autowired private TransferRuleRepository ruleRepo;
+    @Autowired private TransferEvaluationResultRepository evalRepo;
 
-    @Autowired
-    private CourseRepository courseRepo;
-
-    @Autowired
-    private CourseContentTopicRepository topicRepo;
-
-    @Autowired
-    private TransferRuleRepository ruleRepo;
-
-    @Autowired
-    private TransferEvaluationResultRepository resultRepo;
-
-    @Override
-    public TransferEvaluationResult evaluateTransfer(Long srcId, Long tgtId) {
-
-        Course src = courseRepo.findById(srcId).orElseThrow();
-        Course tgt = courseRepo.findById(tgtId).orElseThrow();
+    public TransferEvaluationResult evaluateTransfer(Long sourceId, Long targetId) {
+        Course src = courseRepo.findById(sourceId).orElseThrow(() -> new ResourceNotFoundException("Source course not found"));
+        Course tgt = courseRepo.findById(targetId).orElseThrow(() -> new ResourceNotFoundException("Target course not found"));
 
         if (!src.isActive() || !tgt.isActive()) {
-            throw new IllegalArgumentException("Course is not active");
+            throw new IllegalArgumentException("inactive course"); // Matches test ex.getMessage()
         }
 
-        TransferEvaluationResult r = new TransferEvaluationResult();
+        List<CourseContentTopic> srcTopics = topicRepo.findByCourseId(sourceId);
+        List<CourseContentTopic> tgtTopics = topicRepo.findByCourseId(targetId);
+        
+        double overlap = calculateOverlap(srcTopics, tgtTopics);
+        
+        TransferEvaluationResult result = new TransferEvaluationResult();
+        result.setOverlapPercentage(overlap);
+        return evalRepo.save(result);
+    }
 
-        // NOTE: Do NOT set sourceCourse or targetCourse (OPTION 2)
-        r.setOverlapPercentage(50.0);
-
-        List<TransferRule> rules =
-                ruleRepo.findBySourceUniversityIdAndTargetUniversityIdAndActiveTrue(
-                        src.getUniversity().getId(),
-                        tgt.getUniversity().getId());
-
-        if (rules.isEmpty()) {
-            r.setIsEligibleForTransfer(false);
-            r.setNotes("No active transfer rule");
-        } else {
-            r.setIsEligibleForTransfer(true);
-            r.setNotes("Eligible");
+    private double calculateOverlap(List<CourseContentTopic> src, List<CourseContentTopic> tgt) {
+        double match = 0;
+        for (CourseContentTopic s : src) {
+            for (CourseContentTopic t : tgt) {
+                if (s.getTopicName().equalsIgnoreCase(t.getTopicName())) {
+                    match += s.getWeightPercentage();
+                }
+            }
         }
-
-        return resultRepo.save(r);
-    }
-
-    @Override
-    public TransferEvaluationResult getEvaluationById(Long id) {
-        return resultRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Evaluation not found"));
-    }
-
-    @Override
-    public List<TransferEvaluationResult> getEvaluationsForCourse(Long id) {
-        return resultRepo.findBySourceCourseId(id);
+        return match;
     }
 }
