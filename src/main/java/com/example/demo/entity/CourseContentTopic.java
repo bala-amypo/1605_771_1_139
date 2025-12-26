@@ -1,51 +1,20 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.*;
-
-@Entity
-@Table(name = "course_content_topics", uniqueConstraints = @UniqueConstraint(columnNames = "name"))
 public class CourseContentTopic {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String topicName;
+    private Double weightPercentage;
+    private Course course;
 
-    @Column(nullable = false, unique = true)
-    private String name;
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    @Column(nullable = false)
-    private String description;
+    public String getTopicName() { return topicName; }
+    public void setTopicName(String topicName) { this.topicName = topicName; }
 
-    public CourseContentTopic() {
-    }
+    public Double getWeightPercentage() { return weightPercentage; }
+    public void setWeightPercentage(Double weightPercentage) { this.weightPercentage = weightPercentage; }
 
-    public CourseContentTopic(Long id, String name, String description) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    public Course getCourse() { return course; }
+    public void setCourse(Course course) { this.course = course; }
 }

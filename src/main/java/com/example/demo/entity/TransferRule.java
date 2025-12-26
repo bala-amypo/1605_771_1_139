@@ -1,66 +1,28 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.*;
-
-@Entity
-@Table(
-    name = "transfer_rules",
-    uniqueConstraints = @UniqueConstraint(columnNames = {"sourceUniversity", "targetUniversity"})
-)
 public class TransferRule {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private University sourceUniversity;
+    private University targetUniversity;
+    private Double minimumOverlapPercentage;
+    private Integer creditHourTolerance = 0;
+    private boolean active = true;
 
-    @Column(nullable = false)
-    private String sourceUniversity;
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    @Column(nullable = false)
-    private String targetUniversity;
+    public University getSourceUniversity() { return sourceUniversity; }
+    public void setSourceUniversity(University sourceUniversity) { this.sourceUniversity = sourceUniversity; }
 
-    @Column(nullable = false)
-    private Integer maxCredits;
+    public University getTargetUniversity() { return targetUniversity; }
+    public void setTargetUniversity(University targetUniversity) { this.targetUniversity = targetUniversity; }
 
-    public TransferRule() {
-    }
+    public Double getMinimumOverlapPercentage() { return minimumOverlapPercentage; }
+    public void setMinimumOverlapPercentage(Double minimumOverlapPercentage) { this.minimumOverlapPercentage = minimumOverlapPercentage; }
 
-    public TransferRule(Long id, String sourceUniversity, String targetUniversity, Integer maxCredits) {
-        this.id = id;
-        this.sourceUniversity = sourceUniversity;
-        this.targetUniversity = targetUniversity;
-        this.maxCredits = maxCredits;
-    }
+    public Integer getCreditHourTolerance() { return creditHourTolerance; }
+    public void setCreditHourTolerance(Integer creditHourTolerance) { this.creditHourTolerance = creditHourTolerance; }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getSourceUniversity() {
-        return sourceUniversity;
-    }
-
-    public void setSourceUniversity(String sourceUniversity) {
-        this.sourceUniversity = sourceUniversity;
-    }
-
-    public String getTargetUniversity() {
-        return targetUniversity;
-    }
-
-    public void setTargetUniversity(String targetUniversity) {
-        this.targetUniversity = targetUniversity;
-    }
-
-    public Integer getMaxCredits() {
-        return maxCredits;
-    }
-
-    public void setMaxCredits(Integer maxCredits) {
-        this.maxCredits = maxCredits;
-    }
+    public boolean isActive() { return active; }
+    public void setActive(boolean active) { this.active = active; }
 }
