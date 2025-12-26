@@ -1,16 +1,21 @@
 package com.example.demo.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
 public class University {
+
+    @Id
     private Long id;
     private String name;
-    private boolean active = true;
+    private String country;
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Long getId() {
+        return id;
+    }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-
-    public boolean isActive() { return active; }
-    public void setActive(boolean active) { this.active = active; }
+    public String getCountry() {
+        return country;
+    }
 }
