@@ -7,6 +7,8 @@ import com.example.demo.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -24,12 +26,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User updateUser(Long id, User userDetails) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found"));
         user.setEmail(userDetails.getEmail());
-        if (userDetails.getPassword() != null) {
-            user.setPassword(passwordEncoder.encode(userDetails.getPassword()));
-        }
+        if (userDetails.getPassword() != null) user.setPassword(passwordEncoder.encode(userDetails.getPassword()));
         return userRepository.save(user);
     }
 
@@ -41,4 +40,10 @@ public class UserServiceImpl implements UserService {
         }
         return false;
     }
+
+    @Override
+    public List<User> getAllUsers() { return userRepository.findAll(); }
+
+    @Override
+    public Optional<User> findByEmail(String email) { return userRepository.findByEmail(email); }
 }
