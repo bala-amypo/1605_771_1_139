@@ -11,12 +11,10 @@ public class User {
     
     @Column(unique = true, nullable = false)
     private String email;
-    
     private String password;
-    
-    private String role; // Stores value like "ADMIN" or "EVALUATOR"
+    private String role; // e.g., "STUDENT", "ADMIN"
+    private boolean active = true;
 
-    // Manual helper methods to satisfy service layer requirements
-    public String getRole() { return this.role; }
-    public boolean isActive() { return true; } 
+    public String getRole() { return role; }
+    public boolean isActive() { return active; }
 }
