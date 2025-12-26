@@ -8,40 +8,28 @@ import com.example.demo.entity.CourseContentTopic;
 import com.example.demo.service.CourseContentTopicService;
 
 @RestController
-@RequestMapping("/course-content-topics")
+@RequestMapping("/api/topics")
+@Tag(name = "Course Content Topic")
 public class CourseContentTopicController {
 
-    private final CourseContentTopicService service;
-
-    public CourseContentTopicController(CourseContentTopicService service) {
-        this.service = service;
-    }
-
     @PostMapping
-    public ResponseEntity<CourseContentTopic> create(@RequestBody CourseContentTopic topic) {
-        return new ResponseEntity<>(service.create(topic), HttpStatus.CREATED);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<CourseContentTopic> getById(@PathVariable Long id) {
-        return ResponseEntity.ok(service.getById(id));
-    }
-
-    @GetMapping
-    public ResponseEntity<List<CourseContentTopic>> getAll() {
-        return ResponseEntity.ok(service.getAll());
+    public CourseContentTopic create(@RequestBody CourseContentTopic topic) {
+        return null;
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CourseContentTopic> update(
-            @PathVariable Long id,
-            @RequestBody CourseContentTopic topic) {
-        return ResponseEntity.ok(service.update(id, topic));
+    public CourseContentTopic update(@PathVariable Long id,
+                                     @RequestBody CourseContentTopic topic) {
+        return null;
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        service.delete(id);
-        return ResponseEntity.noContent().build();
+    @GetMapping("/{id}")
+    public CourseContentTopic getById(@PathVariable Long id) {
+        return null;
+    }
+
+    @GetMapping("/course/{courseId}")
+    public List<CourseContentTopic> getByCourse(@PathVariable Long courseId) {
+        return null;
     }
 }
