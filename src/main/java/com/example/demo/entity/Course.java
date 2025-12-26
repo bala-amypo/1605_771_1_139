@@ -1,31 +1,25 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Data;
 
 @Entity
-@Table(name = "courses")
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"university_id", "courseCode"}))
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "university_id")
+    private University university;
+
+    @Column(nullable = false)
     private String courseCode;
+
     private String courseName;
-    private String university;
     private int creditHours;
     private String description;
     private boolean active = true;
-
-    // Explicit Getters to ensure other services can find them
-    public Long getId() { return id; }
-    public String getCourseCode() { return courseCode; }
-    public String getUniversity() { return university; }
-    public int getCreditHours() { return creditHours; }
-    public boolean isActive() { return active; }
-    public void setActive(boolean active) { this.active = active; }
-    public String getCourseName() { return courseName; }
 }
