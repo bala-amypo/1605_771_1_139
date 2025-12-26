@@ -1,3 +1,5 @@
+package com.example.demo.repository;
+
 public interface CourseRepository {
     Optional<Course> findById(Long id);
     Optional<Course> findByUniversityIdAndCourseCode(Long uid, String code);
