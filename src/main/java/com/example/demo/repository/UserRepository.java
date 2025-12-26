@@ -4,8 +4,10 @@ import com.example.demo.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    User findByEmail(String email);               // find by email
-    User findByEmailIgnoreCase(String email);    // optional for case-insensitive search
+
+    Optional<User> findByEmailIgnoreCase(String email); // return Optional for orElseThrow
 }
