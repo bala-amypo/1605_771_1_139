@@ -1,44 +1,24 @@
 package com.example.demo.controller;
 
-import java.util.List;
-
-import org.springframework.http.HttpStatus;
+import com.example.demo.entity.TransferRule;
+import com.example.demo.service.TransferRuleService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.entity.TransferRule;
-import com.example.demo.service.TransferRuleService;
-
-import io.swagger.v3.oas.annotations.tags.Tag;
-
 @RestController
-@RequestMapping("/api/transfer-rules")
-@Tag(name = "Transfer Rule")
+@RequestMapping("/api/rules")
 public class TransferRuleController {
+    private final TransferRuleService service;
+
+    public TransferRuleController(TransferRuleService service) { this.service = service; }
 
     @PostMapping
-    public TransferRule create(@RequestBody TransferRule rule) {
-        return null;
-    }
-
-    @PutMapping("/{id}")
-    public TransferRule update(@PathVariable Long id,
-                               @RequestBody TransferRule rule) {
-        return null;
+    public ResponseEntity<TransferRule> create(@RequestBody TransferRule r) {
+        return ResponseEntity.ok(service.createRule(r));
     }
 
     @GetMapping("/{id}")
     public TransferRule getById(@PathVariable Long id) {
-        return null;
-    }
-
-    @GetMapping("/pair/{sourceId}/{targetId}")
-    public List<TransferRule> getByPair(@PathVariable Long sourceId,
-                                        @PathVariable Long targetId) {
-        return null;
-    }
-
-    @PutMapping("/{id}/deactivate")
-    public void deactivate(@PathVariable Long id) {
+        return service.getRuleById(id);
     }
 }
