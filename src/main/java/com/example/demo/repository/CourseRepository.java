@@ -1,9 +1,6 @@
-package com.example.demo.repository;
-
-import java.util.Optional;
-import org.springframework.data.jpa.repository.JpaRepository;
-import com.example.demo.entity.Course;
-
-public interface CourseRepository extends JpaRepository<Course, Long> {
-    Optional<Course> findByCodeIgnoreCase(String code);
+public interface CourseRepository {
+    Optional<Course> findById(Long id);
+    Optional<Course> findByUniversityIdAndCourseCode(Long uid, String code);
+    List<Course> findByUniversityIdAndActiveTrue(Long uid);
+    Course save(Course c);
 }
