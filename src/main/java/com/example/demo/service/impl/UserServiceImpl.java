@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByEmail(String email) {
-        return userRepository.findByEmail(email);
+        return userRepository.findByEmailIgnoreCase(email).orElse(null);
     }
 
     @Override
@@ -38,6 +38,7 @@ public class UserServiceImpl implements UserService {
             User user = optionalUser.get();
             user.setName(userDetails.getName());
             user.setEmail(userDetails.getEmail());
+            user.setPassword(userDetails.getPassword());
             return userRepository.save(user);
         } else {
             return null;
