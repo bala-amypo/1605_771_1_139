@@ -1,15 +1,41 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.CourseContentTopic;
-import java.util.List;
+import com.example.demo.repository.CourseRepository;
+import com.example.demo.repository.TopicRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-public interface CourseContentTopicService {
-    CourseContentTopic createTopic(CourseContentTopic topic);
-    CourseContentTopic updateTopic(Long id, CourseContentTopic topic);
-    CourseContentTopic getTopicById(Long id);
-    void deleteTopic(Long id);
-    List<CourseContentTopic> getAllTopics();
+@Service
+public class TopicService {
+
+    @Autowired
+    private TopicRepository topicRepo;
     
-    // This is the specific method your TransferEvaluationServiceImpl is looking for:
-    List<CourseContentTopic> getTopicsForCourse(Long courseId); 
+    @Autowired
+    private CourseRepository courseRepo;
+
+    public CourseContentTopic createTopic(CourseContentTopic t) {
+        courseRepo.findById(t.getCourse().getId())
+            .orElseThrow(() -> new RuntimeException("Course not found"));
+            
+        if (t.getWeightPercentage() < 0 || t.getWeightPercentage() > 100) {
+            throw new IllegalArgumentException("Weight must be 0-100");
+        }
+        return topicRepo.save(t);
+    }
+
+    public CourseContentTopic updateTopic(Long id, CourseContentTopic updated) {
+        CourseContentTopic existing = topicRepo.findById(id)
+            .orElseThrow(() -> new RuntimeException("Topic not found"));
+        
+        existing.setTopicName(updated.getTopicName());
+        existing.setWeightPercentage(updated.getWeightPercentage());
+        return topicRepo.save(existing);
+    }
+    
+    public CourseContentTopic getTopicById(Long id) {
+        return topicRepo.findById(id)
+            .orElseThrow(() -> new RuntimeException("Topic not found"));
+    }
 }
