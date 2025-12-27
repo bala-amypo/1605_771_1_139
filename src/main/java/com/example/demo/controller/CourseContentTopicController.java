@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 import com.example.demo.entity.CourseContentTopic;
-import com.example.demo.service.CourseContentTopicService; // Ensure interface name matches
+import com.example.demo.service.CourseContentTopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
