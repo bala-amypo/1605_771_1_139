@@ -15,8 +15,13 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public User createUser(User user) {
+    public User register(User user) {
         return userRepository.save(user);
+    }
+
+    @Override
+    public User login(String username, String password) {
+        return userRepository.findByUsername(username);
     }
 
     @Override
@@ -34,8 +39,8 @@ public class UserServiceImpl implements UserService {
         User existing = getUserById(id);
         if (existing != null) {
             existing.setUsername(user.getUsername());
-            existing.setEmail(user.getEmail());
-            existing.setActive(user.isActive());
+            existing.setPassword(user.getPassword());
+            existing.setRoles(user.getRoles());
             return userRepository.save(existing);
         }
         return null;
