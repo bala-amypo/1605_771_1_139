@@ -1,24 +1,34 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.TransferRule;
-import com.example.demo.service.TransferRuleService;
+import com.example.demo.service.TransferRuleService; // Adjust if named TransferRuleService
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("/api/rules")
-public class TransferRuleController {
-    private final TransferRuleService service;
+import java.util.List;
 
-    public TransferRuleController(TransferRuleService service) { this.service = service; }
+@RestController
+@RequestMapping("/api/transfer-rules")
+public class RuleController {
+
+    @Autowired
+    private RuleService ruleService;
 
     @PostMapping
-    public ResponseEntity<TransferRule> create(@RequestBody TransferRule r) {
-        return ResponseEntity.ok(service.createRule(r));
+    public ResponseEntity<TransferRule> createRule(@RequestBody TransferRule rule) {
+        return ResponseEntity.ok(ruleService.createRule(rule));
     }
 
     @GetMapping("/{id}")
-    public TransferRule getById(@PathVariable Long id) {
-        return service.getRuleById(id);
+    public ResponseEntity<TransferRule> getRuleById(@PathVariable Long id) {
+        return ResponseEntity.ok(ruleService.getRuleById(id));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<TransferRule>> getRules(
+            @RequestParam Long sourceId,
+            @RequestParam Long targetId) {
+        return ResponseEntity.ok(ruleService.getRulesForUniversities(sourceId, targetId));
     }
 }
