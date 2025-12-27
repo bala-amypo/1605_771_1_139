@@ -33,6 +33,14 @@ public class UniversityServiceImpl implements UniversityService {
         return universityRepository.findAll();
     }
 
+@Override
+    public void deactivateUniversity(Long id) {
+        // Logic to deactivate the university
+        // For example:
+        // University university = universityRepository.findById(id).orElseThrow();
+        // university.setActive(false);
+        // universityRepository.save(university);
+    }
     @Override
     public void deleteUniversity(Long id) {
         universityRepository.deleteById(id);
