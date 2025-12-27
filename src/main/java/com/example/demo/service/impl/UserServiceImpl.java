@@ -21,16 +21,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User login(String username, String password) {
         // Note: In a real app, verify the password here!
-        // CHANGE THIS:
-// User user = userRepository.findById(id);
-
-// TO THIS (Best Practice - throw exception if not found):
+        :
 User user = userRepository.findById(id)
     .orElseThrow(() -> new RuntimeException("User not found")); 
 
-// OR THIS (If you just want null):
-// User user = userRepository.findById(id).orElse(null);
-        return userRepository.findByUsername(username);
     }
 
     @Override
