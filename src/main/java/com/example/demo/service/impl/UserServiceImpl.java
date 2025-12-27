@@ -21,7 +21,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public User login(String username, String password) {
         // Note: In a real app, verify the password here!
-        :
 User user = userRepository.findById(id)
     .orElseThrow(() -> new RuntimeException("User not found")); 
 
