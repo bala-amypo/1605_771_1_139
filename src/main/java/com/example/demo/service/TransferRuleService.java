@@ -1,43 +1,52 @@
 package com.example.demo.service;
 import com.example.demo.entity.TransferRule;
-package com.example.demo.service;
-
-import com.example.demo.model.CourseContentTopic;
-import com.example.demo.repository.CourseRepository;
-import com.example.demo.repository.TopicRepository;
+import com.example.demo.repository.RuleRepository;
+import com.example.demo.repository.UniversityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-public class TopicService {
+public class RuleService {
 
     @Autowired
-    private TopicRepository topicRepo;
+    private RuleRepository ruleRepo;
     
     @Autowired
-    private CourseRepository courseRepo;
+    private UniversityRepository universityRepo;
 
-    public CourseContentTopic createTopic(CourseContentTopic t) {
-        courseRepo.findById(t.getCourse().getId())
-            .orElseThrow(() -> new RuntimeException("Course not found"));
-            
-        if (t.getWeightPercentage() < 0 || t.getWeightPercentage() > 100) {
-            throw new IllegalArgumentException("Weight must be 0-100");
+    public TransferRule createRule(TransferRule r) {
+        universityRepo.findById(r.getSourceUniversity().getId())
+             .orElseThrow(() -> new IllegalArgumentException("Source Uni not found"));
+        universityRepo.findById(r.getTargetUniversity().getId())
+             .orElseThrow(() -> new IllegalArgumentException("Target Uni not found"));
+
+        if (r.getCreditHourTolerance() < 0) {
+            throw new IllegalArgumentException("Tolerance must be >= 0");
         }
-        return topicRepo.save(t);
+        return ruleRepo.save(r);
     }
 
-    public CourseContentTopic updateTopic(Long id, CourseContentTopic updated) {
-        CourseContentTopic existing = topicRepo.findById(id)
-            .orElseThrow(() -> new RuntimeException("Topic not found"));
-        
-        existing.setTopicName(updated.getTopicName());
-        existing.setWeightPercentage(updated.getWeightPercentage());
-        return topicRepo.save(existing);
+    public TransferRule updateRule(Long id, TransferRule updated) {
+        TransferRule r = ruleRepo.findById(id)
+            .orElseThrow(() -> new RuntimeException("Rule not found"));
+        // update logic here
+        return ruleRepo.save(r);
     }
     
-    public CourseContentTopic getTopicById(Long id) {
-        return topicRepo.findById(id)
-            .orElseThrow(() -> new RuntimeException("Topic not found"));
+    public TransferRule getRuleById(Long id) {
+        return ruleRepo.findById(id)
+             .orElseThrow(() -> new RuntimeException("Rule not found"));
+    }
+
+    public void deactivateRule(Long id) {
+        TransferRule r = getRuleById(id);
+        r.setActive(false);
+        ruleRepo.save(r);
+    }
+    
+    public List<TransferRule> getRulesForUniversities(Long sourceId, Long targetId) {
+        return ruleRepo.findBySourceUniversityIdAndTargetUniversityIdAndActiveTrue(sourceId, targetId);
     }
 }
