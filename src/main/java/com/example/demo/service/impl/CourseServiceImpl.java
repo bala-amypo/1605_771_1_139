@@ -1,63 +1,59 @@
 package com.example.demo.service.impl;
-
 import com.example.demo.entity.Course;
 import com.example.demo.repository.CourseRepository;
+import com.example.demo.repository.UniversityRepository;
 import com.example.demo.service.CourseService;
+import com.example.demo.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.ArrayList;
 
 @Service
 public class CourseServiceImpl implements CourseService {
 
     @Autowired
-    private CourseRepository courseRepository;
+    private CourseRepository courseRepo;
+    
+    @Autowired
+    private UniversityRepository universityRepo;
 
     @Override
-    public Course createCourse(Course course) {
-        return courseRepository.save(course);
+    public Course createCourse(Course c) {
+        if (c.getCreditHours() <= 0) {
+            throw new IllegalArgumentException("Credit hours must be > 0");
+        }
+        // Verify University exists
+        universityRepo.findById(c.getUniversity().getId())
+            .orElseThrow(() -> new ResourceNotFoundException("University not found"));
+
+        return courseRepo.save(c);
+    }
+
+    @Override
+    public Course updateCourse(Long id, Course c) {
+        Course existing = getCourseById(id);
+        existing.setCourseCode(c.getCourseCode());
+        existing.setCourseName(c.getCourseName());
+        existing.setCreditHours(c.getCreditHours());
+        existing.setDescription(c.getDescription());
+        return courseRepo.save(existing);
     }
 
     @Override
     public Course getCourseById(Long id) {
-        return courseRepository.findById(id).orElse(null);
+        return courseRepo.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Course not found"));
     }
 
-    @Override
-    public List<Course> getAllCourses() {
-        return courseRepository.findAll();
-    }
-
-    @Override
-    public Course updateCourse(Long id, Course course) {
-        Course existing = getCourseById(id);
-        if (existing != null) {
-            existing.setCourseName(course.getCourseName());
-            existing.setCourseCode(course.getCourseCode());
-            existing.setCreditHours(course.getCreditHours());
-            existing.setDescription(course.getDescription());
-            existing.setActive(course.isActive());
-            return courseRepository.save(existing);
-        }
-        return null;
-    }
-
-    @Override
-    public void deleteCourse(Long id) {
-        courseRepository.deleteById(id);
-    }
-
-    // ✅ REQUIRED by interface (dummy logic for testcases)
-    @Override
-    public void deactivateCourse(Long id) {
-        // no-op, required only for test case
-    }
-
-    
     @Override
     public List<Course> getCoursesByUniversity(Long universityId) {
-        return new ArrayList<>();
+        return courseRepo.findByUniversityId(universityId);
+    }
+
+    @Override
+    public void deactivateCourse(Long id) {
+        Course c = getCourseById(id);
+        c.setActive(false);
+        courseRepo.save(c);
     }
 }
