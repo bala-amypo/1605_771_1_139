@@ -1,11 +1,15 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.CourseContentTopic; // Make sure this import matches your package
+import com.example.demo.entity.CourseContentTopic;
 import java.util.List;
 
 public interface CourseContentTopicService {
-    // Other methods...
+    CourseContentTopic createTopic(CourseContentTopic topic);
+    CourseContentTopic updateTopic(Long id, CourseContentTopic topic);
+    CourseContentTopic getTopicById(Long id);
+    void deleteTopic(Long id);
+    List<CourseContentTopic> getAllTopics();
     
-    // CHANGE return type from String to CourseContentTopic
-    CourseContentTopic getTopicById(Long id); 
+    // This is the specific method your TransferEvaluationServiceImpl is looking for:
+    List<CourseContentTopic> getTopicsForCourse(Long courseId); 
 }
