@@ -22,7 +22,7 @@ public class User {
     // 1. Default Constructor (Required by JPA)
     public User() {}
 
-    // 2. Constructor expected by the Test Case
+    // 2. Constructor REQUIRED by Test Cases
     public User(String username, String password, Set<String> roles) {
         this.username = username;
         this.password = password;
@@ -44,8 +44,4 @@ public class User {
 
     public Set<String> getRoles() { return roles; }
     public void setRoles(Set<String> roles) { this.roles = roles; }
-    
-    // Helper helper for the test if it checks 'isPresent' on the User object itself (rare but possible in old tests)
-    // or if the Service returns Optional<User>, this isn't needed. 
-    // But we will handle the return type in the Service.
 }
