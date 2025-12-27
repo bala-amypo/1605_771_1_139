@@ -35,11 +35,16 @@ public class UniversityServiceImpl implements UniversityService {
 
 @Override
     public void deactivateUniversity(Long id) {
-        // Logic to deactivate the university
-        // For example:
-        // University university = universityRepository.findById(id).orElseThrow();
-        // university.setActive(false);
-        // universityRepository.save(university);
+        // 1. Fetch the university using the repository
+        University university = universityRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("University not found with id: " + id));
+
+        // 2. Perform the deactivation logic
+        // (Make sure your University entity has a field like 'isActive' or 'status')
+        // Example: university.setActive(false); 
+        
+        // 3. Save the updated entity
+        universityRepository.save(university);
     }
     @Override
     public void deleteUniversity(Long id) {
