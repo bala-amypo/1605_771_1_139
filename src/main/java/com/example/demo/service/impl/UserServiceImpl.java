@@ -1,34 +1,54 @@
-package com.example.demo.entity;
+package com.example.demo.service.impl;
 
-import jakarta.persistence.*; // Use javax.persistence.* if on Spring Boot 2
-import java.util.Set;
+import com.example.demo.entity.User;
+import com.example.demo.repository.UserRepository;
+import com.example.demo.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import java.util.List;
 
-@Entity
-@Table(name = "users") 
-public class User {
+@Service
+public class UserServiceImpl implements UserService {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Autowired
+    private UserRepository userRepository;
 
-    private String username;
-    private String password;
-    private String email; 
-    private String roles; // <--- ADDED THIS FIELD
+    @Override
+    public User register(User user) {
+        return userRepository.save(user);
+    }
 
-    // Getters and Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    @Override
+    public User login(String username, String password) {
+        // Note: In a real app, verify the password here!
+        return userRepository.findByUsername(username);
+    }
 
-    public String getUsername() { return username; }
-    public void setUsername(String username) { this.username = username; }
+    @Override
+    public User getUserById(Long id) {
+        return userRepository.findById(id).orElse(null);
+    }
 
-    public String getPassword() { return password; }
-    public void setPassword(String password) { this.password = password; }
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
 
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    @Override
+    public User updateUser(Long id, User user) {
+        User existing = getUserById(id);
+        if (existing != null) {
+            existing.setUsername(user.getUsername());
+            existing.setPassword(user.getPassword());
+            existing.setEmail(user.getEmail()); // Added this update
+            existing.setRoles(user.getRoles()); // This now works because we added it to Entity
+            return userRepository.save(existing);
+        }
+        return null;
+    }
 
-    public String getRoles() { return roles; }      // <--- ADDED GETTER
-    public void setRoles(String roles) { this.roles = roles; } // <--- ADDED SETTER
+    @Override
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
+    }
 }

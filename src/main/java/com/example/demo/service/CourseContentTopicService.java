@@ -1,11 +1,11 @@
 package com.example.demo.service;
-import com.example.demo.entity.CourseContentTopic;
+
+import com.example.demo.entity.CourseContentTopic; // Make sure this import matches your package
 import java.util.List;
 
 public interface CourseContentTopicService {
-    CourseContentTopic createTopic(CourseContentTopic t);
-    CourseContentTopic updateTopic(Long id, CourseContentTopic t);
-    CourseContentTopic getTopicById(Long id);
-    List<CourseContentTopic> getTopicsForCourse(Long courseId);
-    void deleteTopic(Long id);
+    // Other methods...
+    
+    // CHANGE return type from String to CourseContentTopic
+    CourseContentTopic getTopicById(Long id); 
 }
