@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -14,7 +15,19 @@ public class User {
     private String username;
     private String password;
     private String email;
-    private String roles; // <--- This was missing and causing errors
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    private Set<String> roles = new HashSet<>();
+
+    // 1. Default Constructor (Required by JPA)
+    public User() {}
+
+    // 2. Constructor expected by the Test Case
+    public User(String username, String password, Set<String> roles) {
+        this.username = username;
+        this.password = password;
+        this.roles = roles;
+    }
 
     // Getters and Setters
     public Long getId() { return id; }
@@ -29,6 +42,10 @@ public class User {
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
 
-    public String getRoles() { return roles; }      // <--- Added Getter
-    public void setRoles(String roles) { this.roles = roles; } // <--- Added Setter
+    public Set<String> getRoles() { return roles; }
+    public void setRoles(Set<String> roles) { this.roles = roles; }
+    
+    // Helper helper for the test if it checks 'isPresent' on the User object itself (rare but possible in old tests)
+    // or if the Service returns Optional<User>, this isn't needed. 
+    // But we will handle the return type in the Service.
 }
