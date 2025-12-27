@@ -1,10 +1,10 @@
-package com.example.demo.entity; // This was likely missing or wrong
+package com.example.demo.entity;
 
-import jakarta.persistence.*; // Use javax.persistence.* if using Spring Boot 2
+import jakarta.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "users") // Good practice to avoid conflict with SQL keywords
+@Table(name = "users")
 public class User {
 
     @Id
@@ -13,9 +13,8 @@ public class User {
 
     private String username;
     private String password;
-    
-    // Assuming you might have roles or email based on standard auth
-    private String email; 
+    private String email;
+    private String roles; // <--- This was missing and causing errors
 
     // Getters and Setters
     public Long getId() { return id; }
@@ -29,4 +28,7 @@ public class User {
 
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
+
+    public String getRoles() { return roles; }      // <--- Added Getter
+    public void setRoles(String roles) { this.roles = roles; } // <--- Added Setter
 }
