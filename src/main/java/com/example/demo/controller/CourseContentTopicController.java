@@ -1,5 +1,4 @@
 package com.example.demo.controller;
-
 import com.example.demo.entity.CourseContentTopic;
 import com.example.demo.service.CourseContentTopicService; // Ensure interface name matches
 import org.springframework.beans.factory.annotation.Autowired;
