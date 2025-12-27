@@ -1,6 +1,6 @@
 package com.example.demo.service;
 import com.example.demo.entity.TransferRule;
-import com.example.demo.repository.RuleRepository;
+import com.example.demo.repository.TransferRuleRepository;
 import com.example.demo.repository.UniversityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
