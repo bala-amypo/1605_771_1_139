@@ -9,20 +9,18 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CourseContentTopicServiceImpl implements CourseContentTopicService {
-
-    @Autowired
-    private CourseContentTopicRepository repo;
+public class CourseContentTopicServiceImpl
+        implements CourseContentTopicService {
 
     @Override
-    public CourseContentTopic createTopic(CourseContentTopic topic) {
-        return repo.save(topic);
+    public String getTopicById(Long id) {
+        return "Sample Topic";
     }
+}
 
-    @Override
-    public List<CourseContentTopic> getTopicsForCourse(Long courseId) {
-        return repo.findByCourseId(courseId);
-    }
+    
+
+    
 
     @Override
     public CourseContentTopic updateTopic(Long id, CourseContentTopic topic) {
