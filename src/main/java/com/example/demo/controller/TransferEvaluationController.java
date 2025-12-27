@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.TransferEvaluationResult;
-import com.example.demo.service.EvaluationService; // Adjust if named TransferEvaluationService
+import com.example.demo.service.TransferEvaluationService; 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
