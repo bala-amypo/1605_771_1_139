@@ -1,48 +1,48 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.University;
-import com.example.demo.repository.UniversityRepository;
-import com.example.demo.service.UniversityService;
+import com.example.demo.entity.User;
+import com.example.demo.repository.UserRepository;
+import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class UniversityServiceImpl implements UniversityService {
+public class UserServiceImpl implements UserService {
 
     @Autowired
-    private UniversityRepository universityRepository;
+    private UserRepository userRepository;
 
     @Override
-    public University createUniversity(University university) {
-        return universityRepository.save(university);
+    public User createUser(User user) {
+        return userRepository.save(user);
     }
 
     @Override
-    public University getUniversityById(Long id) {
-        return universityRepository.findById(id).orElse(null);
+    public User getUserById(Long id) {
+        return userRepository.findById(id).orElse(null);
     }
 
     @Override
-    public List<University> getAllUniversities() {
-        return universityRepository.findAll();
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 
     @Override
-    public University updateUniversity(Long id, University university) {
-        University existing = getUniversityById(id);
+    public User updateUser(Long id, User user) {
+        User existing = getUserById(id);
         if (existing != null) {
-            existing.setName(university.getName());
-            existing.setLocation(university.getLocation());
-            existing.setActive(university.isActive());
-            return universityRepository.save(existing);
+            existing.setUsername(user.getUsername());
+            existing.setEmail(user.getEmail());
+            existing.setActive(user.isActive());
+            return userRepository.save(existing);
         }
         return null;
     }
 
     @Override
-    public void deleteUniversity(Long id) {
-        universityRepository.deleteById(id);
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
     }
 }
