@@ -5,7 +5,7 @@ import java.util.List;
 public interface CourseContentTopicService {
     CourseContentTopic createTopic(CourseContentTopic t);
     CourseContentTopic updateTopic(Long id, CourseContentTopic t);
-    String getTopicById(Long id);
+    CourseContentTopic getTopicById(Long id);
     List<CourseContentTopic> getTopicsForCourse(Long courseId);
     void deleteTopic(Long id);
 }
