@@ -18,7 +18,10 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // Try finding by username first
-        User user = userRepository.findByUsername(username);
+
+// TO THIS:
+  User user = userRepository.findByUsername(username)
+    .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
         
         // If not found, try finding by email (fixes "cannot find symbol findByEmail")
         if (user == null) {
