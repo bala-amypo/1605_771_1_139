@@ -1,39 +1,35 @@
 package com.example.demo.controller;
 
-import java.util.List;
-
-import org.springframework.http.HttpStatus;
+import com.example.demo.entity.CourseContentTopic;
+import com.example.demo.service.TopicService; // Ensure interface name matches
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.entity.CourseContentTopic;
-import com.example.demo.service.CourseContentTopicService;
-
-import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/topics")
-@Tag(name = "Course Content Topic")
-public class CourseContentTopicController {
+public class TopicController {
+
+    // Note: Assuming the service interface is named 'TopicService' or 'CourseContentTopicService'
+    // Adjust variable type based on your service interface name
+    @Autowired
+    private TopicService topicService; 
 
     @PostMapping
-    public CourseContentTopic create(@RequestBody CourseContentTopic topic) {
-        return null;
-    }
-
-    @PutMapping("/{id}")
-    public CourseContentTopic update(@PathVariable Long id,
-                                     @RequestBody CourseContentTopic topic) {
-        return null;
-    }
-
-    @GetMapping("/{id}")
-    public CourseContentTopic getById(@PathVariable Long id) {
-        return null;
+    public ResponseEntity<CourseContentTopic> createTopic(@RequestBody CourseContentTopic topic) {
+        return ResponseEntity.ok(topicService.createTopic(topic));
     }
 
     @GetMapping("/course/{courseId}")
-    public List<CourseContentTopic> getByCourse(@PathVariable Long courseId) {
-        return null;
+    public ResponseEntity<List<CourseContentTopic>> getTopicsByCourse(@PathVariable Long courseId) {
+        // You might need to add this method to your Service Interface if missing
+        return ResponseEntity.ok(topicService.getTopicsForCourse(courseId)); 
+    }
+    
+    @GetMapping("/{id}")
+    public ResponseEntity<CourseContentTopic> getTopicById(@PathVariable Long id) {
+        return ResponseEntity.ok(topicService.getTopicById(id));
     }
 }
