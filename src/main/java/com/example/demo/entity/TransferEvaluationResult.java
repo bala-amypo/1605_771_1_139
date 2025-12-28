@@ -55,16 +55,5 @@ public class TransferEvaluationResult {
     public void setTargetCourse(Course targetCourse) {
         this.targetCourse = targetCourse;
     }
-    public void setId(Long id) {
-    this.id = id;
-}
-
-public boolean getIsEligibleForTransfer() {
-    return isEligibleForTransfer;
-}
-
-public String getNotes() {
-    return notes;
-}
-
+    
 }
