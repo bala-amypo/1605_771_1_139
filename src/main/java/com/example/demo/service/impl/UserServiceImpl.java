@@ -1,47 +1,52 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.User;
-import com.example.demo.repository.UserRepository;
-import com.example.demo.service.UserService;
+import com.example.demo.entity.University;
+import com.example.demo.repository.UniversityRepository;
+import com.example.demo.service.UniversityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UniversityServiceImpl implements UniversityService {
 
     @Autowired
-    private UserRepository userRepository;
+    private UniversityRepository universityRepository;
 
     @Override
-    public User register(User user) {
-        return userRepository.save(user);
+    public University createUniversity(University university) {
+        return universityRepository.save(university);
     }
 
     @Override
-    public User findByEmail(String email) {
-        return userRepository.findByEmail(email).orElse(null);
+    public University updateUniversity(Long id, University university) {
+        university.setId(id);
+        return universityRepository.save(university);
     }
 
     @Override
-    public User getUserById(Long id) {
-        return userRepository.findById(id).orElse(null);
+    public University getUniversityById(Long id) {
+        return universityRepository.findById(id).orElse(null);
     }
 
     @Override
-    public User updateUser(Long id, User user) {
-        user.setId(id);
-        return userRepository.save(user);
+    public void deleteUniversity(Long id) {
+        universityRepository.deleteById(id);
     }
 
     @Override
-    public void deleteUser(Long id) {
-        userRepository.deleteById(id);
+    public List<University> getAllUniversities() {
+        return universityRepository.findAll();
     }
 
     @Override
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public University deactivateUniversity(Long id) {
+        University university = universityRepository.findById(id).orElse(null);
+        if (university != null) {
+            university.setActive(false); // deactivate
+            universityRepository.save(university);
+        }
+        return university;
     }
 }
