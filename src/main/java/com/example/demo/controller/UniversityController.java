@@ -53,7 +53,6 @@ public class UniversityController {
         return ResponseEntity.noContent().build();
     }
 
-    // Deactivate a university
     @PutMapping("/{id}/deactivate")
     public ResponseEntity<University> deactivateUniversity(@PathVariable Long id) {
         University deactivated = universityService.deactivateUniversity(id);
