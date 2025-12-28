@@ -5,5 +5,5 @@ import com.example.demo.entity.User;
 public interface UserService {
     User register(User user);
     User getUserById(Long id);
-    User findByEmail(String email);   // 👈 ADD THIS
+    User findByEmail(String email);  
 }
