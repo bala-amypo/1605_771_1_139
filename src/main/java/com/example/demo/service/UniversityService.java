@@ -9,4 +9,7 @@ public interface UniversityService {
     University getUniversityById(Long id);
     void deleteUniversity(Long id);
     List<University> getAllUniversities();
+
+    // New method
+    University deactivateUniversity(Long id);
 }
