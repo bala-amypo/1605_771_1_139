@@ -1,23 +1,69 @@
 package com.example.demo.entity;
+
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
-@Data
-@NoArgsConstructor
 public class TransferRule {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private University sourceUniversity;
+    private String sourceUniversity;
+    private String targetUniversity;
 
-    @ManyToOne
-    private University targetUniversity;
+    private double minimumOverallPercentage;
+    private int creditHourTolerance;
 
-    private double minimumOverlapPercentage;
-    private int creditHourTolerance; // e.g., 0, 1, 2
-    private boolean active = true;
+    private boolean active;
+
+    // ===== Getters & Setters =====
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getSourceUniversity() {
+        return sourceUniversity;
+    }
+
+    public void setSourceUniversity(String sourceUniversity) {
+        this.sourceUniversity = sourceUniversity;
+    }
+
+    public String getTargetUniversity() {
+        return targetUniversity;
+    }
+
+    public void setTargetUniversity(String targetUniversity) {
+        this.targetUniversity = targetUniversity;
+    }
+
+    public double getMinimumOverallPercentage() {
+        return minimumOverallPercentage;
+    }
+
+    public void setMinimumOverallPercentage(double minimumOverallPercentage) {
+        this.minimumOverallPercentage = minimumOverallPercentage;
+    }
+
+    public int getCreditHourTolerance() {
+        return creditHourTolerance;
+    }
+
+    public void setCreditHourTolerance(int creditHourTolerance) {
+        this.creditHourTolerance = creditHourTolerance;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 }
