@@ -15,6 +15,5 @@ public interface UniversityService {
 
     void deleteUniversity(Long id);
 
-    // REQUIRED BY CONTROLLER
     void deactivateUniversity(Long id);
 }
