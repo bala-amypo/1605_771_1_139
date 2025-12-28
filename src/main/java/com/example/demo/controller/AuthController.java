@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.*;
+import com.example.demo.dto.AuthRequest;
+import com.example.demo.dto.AuthResponse;
 import com.example.demo.entity.User;
 import com.example.demo.security.JwtTokenProvider;
 import com.example.demo.service.UserService;
@@ -32,6 +33,7 @@ public class AuthController {
         );
 
         User user = userService.findByEmail(request.getEmail());
+
         String token = jwtTokenProvider.generateToken(
                 user.getEmail(), user.getRole());
 
