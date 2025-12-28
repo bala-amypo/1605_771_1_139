@@ -9,6 +9,10 @@ public class TransferRule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column
+    private Double minimumOverlapPercentage; // Example: Double, Integer, or int
+
+
     private String sourceUniversity;
     private String targetUniversity;
 
@@ -49,10 +53,14 @@ public class TransferRule {
     public void setMinimumOverallPercentage(double minimumOverallPercentage) {
         this.minimumOverallPercentage = minimumOverallPercentage;
     }
-    public void setMinimumOverlapPercentage(double percentage) {
-    this.minimumOverlapPercentage = percentage;
+
+    public Double getMinimumOverlapPercentage() {
+    return minimumOverlapPercentage;
     }
 
+   public void setMinimumOverlapPercentage(Double minimumOverlapPercentage) {
+    this.minimumOverlapPercentage = minimumOverlapPercentage;
+    }
 
     public int getCreditHourTolerance() {
         return creditHourTolerance;
