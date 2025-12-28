@@ -10,20 +10,10 @@ public class CourseContentTopic {
     private Long id;
 
     private String topicName;
-
-    private double weightPercentage;
-
-    @ManyToOne
-    private Course course;
-
-    // ===== Getters & Setters =====
+    private double minimumOverlapPercentage;
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getTopicName() {
@@ -34,19 +24,11 @@ public class CourseContentTopic {
         this.topicName = topicName;
     }
 
-    public double getWeightPercentage() {
-        return weightPercentage;
+    public double getMinimumOverlapPercentage() {
+        return minimumOverlapPercentage;
     }
 
-    public void setWeightPercentage(double weightPercentage) {
-        this.weightPercentage = weightPercentage;
-    }
-
-    public Course getCourse() {
-        return course;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
+    public void setMinimumOverlapPercentage(double minimumOverlapPercentage) {
+        this.minimumOverlapPercentage = minimumOverlapPercentage;
     }
 }
