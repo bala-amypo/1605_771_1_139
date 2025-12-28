@@ -10,12 +10,20 @@ public class TransferRule {
     private Long id;
 
     @Column
-    private Double minimumOverlapPercentage; // fixed missing field
-     
+    private Double minimumOverlapPercentage;
+
     @Column
-    private Boolean active = true;
+    private Boolean active = true; // new active field
 
     // Getters and setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public Double getMinimumOverlapPercentage() {
         return minimumOverlapPercentage;
     }
@@ -23,11 +31,12 @@ public class TransferRule {
     public void setMinimumOverlapPercentage(Double minimumOverlapPercentage) {
         this.minimumOverlapPercentage = minimumOverlapPercentage;
     }
+
     public Boolean getActive() {
-    return active;
+        return active;
     }
 
-     public void setActive(Boolean active) {
-    this.active = active;
-     }
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
 }
