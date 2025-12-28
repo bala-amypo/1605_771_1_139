@@ -10,17 +10,19 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // REQUIRED BY TESTS
     @Column(unique = true, nullable = false)
     private String code;
+
+    // REQUIRED BY CourseServiceImpl (getCourseName)
+    private String courseName;
 
     private String title;
 
     private Double credits;
 
-    // REQUIRED BY SERVICE LAYER
     private boolean active = true;
 
-    // REQUIRED BY TRANSFER LOGIC
     @ManyToOne
     @JoinColumn(name = "university_id")
     private University university;
@@ -41,6 +43,15 @@ public class Course {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    // 🔴 THIS FIXES YOUR CURRENT ERROR
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
     }
 
     public String getTitle() {
