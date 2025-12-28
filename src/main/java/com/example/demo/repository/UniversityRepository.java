@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UniversityRepository extends JpaRepository<University, Long> {
-    // Add any custom methods if needed
+    // Add custom queries if needed
 }
