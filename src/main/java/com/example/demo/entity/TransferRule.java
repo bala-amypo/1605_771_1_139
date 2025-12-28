@@ -10,72 +10,14 @@ public class TransferRule {
     private Long id;
 
     @Column
-    private Double minimumOverlapPercentage; // Example: Double, Integer, or int
+    private Double minimumOverlapPercentage; // fixed missing field
 
-
-    private String sourceUniversity;
-    private String targetUniversity;
-
-    private double minimumOverallPercentage;
-    private int creditHourTolerance;
-
-    private boolean active;
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getSourceUniversity() {
-        return sourceUniversity;
-    }
-
-    public void setSourceUniversity(String sourceUniversity) {
-        this.sourceUniversity = sourceUniversity;
-    }
-
-    public String getTargetUniversity() {
-        return targetUniversity;
-    }
-
-    public void setTargetUniversity(String targetUniversity) {
-        this.targetUniversity = targetUniversity;
-    }
-
-    public double getMinimumOverallPercentage() {
-        return minimumOverallPercentage;
-    }
-
-    public void setMinimumOverallPercentage(double minimumOverallPercentage) {
-        this.minimumOverallPercentage = minimumOverallPercentage;
-    }
-
+    // Getters and setters
     public Double getMinimumOverlapPercentage() {
-    return minimumOverlapPercentage;
+        return minimumOverlapPercentage;
     }
 
-   public void setMinimumOverlapPercentage(Double minimumOverlapPercentage) {
-    this.minimumOverlapPercentage = minimumOverlapPercentage;
+    public void setMinimumOverlapPercentage(Double minimumOverlapPercentage) {
+        this.minimumOverlapPercentage = minimumOverlapPercentage;
     }
-
-    public int getCreditHourTolerance() {
-        return creditHourTolerance;
-    }
-
-    public void setCreditHourTolerance(int creditHourTolerance) {
-        this.creditHourTolerance = creditHourTolerance;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-    
 }
