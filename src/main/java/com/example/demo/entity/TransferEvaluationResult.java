@@ -19,7 +19,6 @@ public class TransferEvaluationResult {
     @ManyToOne
     private Course targetCourse;
 
-    // ===== GETTERS & SETTERS =====
 
     public Long getId() {
         return id;
@@ -33,7 +32,6 @@ public class TransferEvaluationResult {
         this.overlapPercentage = overlapPercentage;
     }
 
-    // 🔥 REQUIRED
     public boolean isEligible() {
         return eligible;
     }
@@ -57,4 +55,16 @@ public class TransferEvaluationResult {
     public void setTargetCourse(Course targetCourse) {
         this.targetCourse = targetCourse;
     }
+    public void setId(Long id) {
+    this.id = id;
+}
+
+public boolean getIsEligibleForTransfer() {
+    return isEligibleForTransfer;
+}
+
+public String getNotes() {
+    return notes;
+}
+
 }
