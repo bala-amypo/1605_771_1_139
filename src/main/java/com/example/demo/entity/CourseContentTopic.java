@@ -2,7 +2,7 @@ package com.example.demo.entity;
 
 import jakarta.persistence.*;
 
-@Entity
+Entity
 public class CourseContentTopic {
 
     @Id
@@ -10,10 +10,17 @@ public class CourseContentTopic {
     private Long id;
 
     private String topicName;
-    private double minimumOverlapPercentage;
+
+    @ManyToOne
+    @JoinColumn(name = "course_id")
+    private Course course;
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTopicName() {
@@ -24,11 +31,13 @@ public class CourseContentTopic {
         this.topicName = topicName;
     }
 
-    public double getMinimumOverlapPercentage() {
-        return minimumOverlapPercentage;
+    public Course getCourse() {
+        return course;
     }
 
-    public void setMinimumOverlapPercentage(double minimumOverlapPercentage) {
-        this.minimumOverlapPercentage = minimumOverlapPercentage;
+    public void setCourse(Course course) {
+        this.course = course;
     }
+
+    
 }
