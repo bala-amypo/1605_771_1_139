@@ -15,24 +15,51 @@ public class UniversityController {
     @Autowired
     private UniversityService universityService;
 
+    // Create a new university
     @PostMapping
     public ResponseEntity<University> createUniversity(@RequestBody University university) {
-        return ResponseEntity.ok(universityService.createUniversity(university));
+        University created = universityService.createUniversity(university);
+        return ResponseEntity.ok(created);
     }
 
+    // Get all universities
     @GetMapping
     public ResponseEntity<List<University>> getAllUniversities() {
-        return ResponseEntity.ok(universityService.getAllUniversities());
+        List<University> list = universityService.getAllUniversities();
+        return ResponseEntity.ok(list);
     }
 
+    // Get a university by ID
     @GetMapping("/{id}")
     public ResponseEntity<University> getUniversityById(@PathVariable Long id) {
-        return ResponseEntity.ok(universityService.getUniversityById(id));
+        University university = universityService.getUniversityById(id);
+        if (university == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(university);
     }
 
+    // Update a university
+    @PutMapping("/{id}")
+    public ResponseEntity<University> updateUniversity(@PathVariable Long id, @RequestBody University university) {
+        University updated = universityService.updateUniversity(id, university);
+        return ResponseEntity.ok(updated);
+    }
+
+    // Delete a university
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deactivateUniversity(@PathVariable Long id) {
-        universityService.deactivateUniversity(id);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Void> deleteUniversity(@PathVariable Long id) {
+        universityService.deleteUniversity(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    // Deactivate a university
+    @PutMapping("/{id}/deactivate")
+    public ResponseEntity<University> deactivateUniversity(@PathVariable Long id) {
+        University deactivated = universityService.deactivateUniversity(id);
+        if (deactivated == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(deactivated);
     }
 }
