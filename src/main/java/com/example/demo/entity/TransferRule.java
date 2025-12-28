@@ -49,6 +49,11 @@ public class TransferRule {
     public void setMinimumOverallPercentage(double minimumOverallPercentage) {
         this.minimumOverallPercentage = minimumOverallPercentage;
     }
+    
+    public void setMinimumOverlapPercentage(double percentage) {
+    this.minimumOverlapPercentage = percentage;
+    }
+
 
     public int getCreditHourTolerance() {
         return creditHourTolerance;
@@ -65,4 +70,5 @@ public class TransferRule {
     public void setActive(boolean active) {
         this.active = active;
     }
+    
 }
