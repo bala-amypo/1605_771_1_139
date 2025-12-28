@@ -53,7 +53,6 @@ public class TransferRuleController {
         return ResponseEntity.noContent().build();
     }
 
-    // Deactivate a transfer rule
     @PutMapping("/{id}/deactivate")
     public ResponseEntity<TransferRule> deactivateRule(@PathVariable Long id) {
         TransferRule deactivated = transferRuleService.deactivateRule(id);
