@@ -4,40 +4,30 @@ import jakarta.persistence.*;
 
 @Entity
 public class Course {
-
-    @Id
+     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String courseName;
-
-    private int creditHours;
-
+    private String name;
     private boolean active;
 
     @ManyToOne
     private University university;
 
-    // ===== GETTERS & SETTERS =====
-
     public Long getId() {
         return id;
     }
 
-    public String getCourseName() {
-        return courseName;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
+    public String getName() {
+        return name;
     }
 
-    public int getCreditHours() {
-        return creditHours;
-    }
-
-    public void setCreditHours(int creditHours) {
-        this.creditHours = creditHours;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public boolean isActive() {
@@ -48,7 +38,6 @@ public class Course {
         this.active = active;
     }
 
-    // 🔥 REQUIRED BY SERVICES & TESTS
     public University getUniversity() {
         return university;
     }
@@ -56,4 +45,6 @@ public class Course {
     public void setUniversity(University university) {
         this.university = university;
     }
+
+    
 }
