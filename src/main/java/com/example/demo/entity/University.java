@@ -11,9 +11,10 @@ public class University {
 
     private String name;
 
-    private boolean active;
+    @Column
+    private Boolean active = true; 
 
-    // ===== GETTERS & SETTERS =====
+   
 
     public Long getId() {
         return id;
@@ -31,11 +32,12 @@ public class University {
         this.name = name;
     }
 
-    public boolean isActive() {
-        return active;
-    }
+    public Boolean getActive() {
+    return active;
+     }
 
-    public void setActive(boolean active) {
-        this.active = active;
-    }
+    public void setActive(Boolean active) {
+    this.active = active;
+     }
+
 }

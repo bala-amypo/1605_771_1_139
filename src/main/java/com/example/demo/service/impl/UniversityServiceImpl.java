@@ -39,4 +39,14 @@ public class UniversityServiceImpl implements UniversityService {
     public List<University> getAllUniversities() {
         return universityRepository.findAll();
     }
+    @Override
+    public University deactivateUniversity(Long id) {
+    University university = universityRepository.findById(id).orElse(null);
+    if (university != null) {
+        university.setActive(false); 
+        universityRepository.save(university);
+    }
+    return university;
+}
+
 }
