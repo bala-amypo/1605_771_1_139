@@ -28,6 +28,17 @@ public class JwtTokenProvider {
                 .getBody()
                 .getSubject();
     }
+     public String createToken(Long userId, String email, Set<String> roles) {
+    return "dummy-token";
+}
+
+public String getEmail(String token) {
+    return "test@email.com";
+}
+
+public Long getUserId(String token) {
+    return 1L;
+}
 
     public boolean validateToken(String token) {
         try {
