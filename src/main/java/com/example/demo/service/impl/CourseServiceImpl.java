@@ -50,4 +50,8 @@ public class CourseServiceImpl implements CourseService {
     public void deleteCourse(Long id) {
         courseRepository.deleteById(id);
     }
+    @Override
+     public List<Course> getCoursesByUniversity(Long universityId) {
+    return courseRepository.findAll();
+     }
 }
