@@ -37,7 +37,8 @@ public class TransferEvaluationServiceImpl implements TransferEvaluationService 
         boolean eligible =
                 src.isActive() &&
                 tgt.isActive() &&
-                src.getUniversity().equalsIgnoreCase(tgt.getUniversity());
+                src.getUniversity().getName()
+                        .equalsIgnoreCase(tgt.getUniversity().getName());
 
         result.setEligible(eligible);
 
