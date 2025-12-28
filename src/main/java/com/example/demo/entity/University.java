@@ -9,13 +9,13 @@ public class University {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column
     private String name;
 
     @Column
-    private Boolean active = true; 
+    private Boolean active = true; // new active field
 
-   
-
+    // Getters and setters
     public Long getId() {
         return id;
     }
@@ -33,11 +33,10 @@ public class University {
     }
 
     public Boolean getActive() {
-    return active;
-     }
+        return active;
+    }
 
     public void setActive(Boolean active) {
-    this.active = active;
-     }
-
+        this.active = active;
+    }
 }
