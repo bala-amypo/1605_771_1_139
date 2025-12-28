@@ -10,10 +10,15 @@ public class Course {
     private Long id;
 
     private String courseName;
+
     private int creditHours;
+
     private boolean active;
 
-    // ===== GETTERS / SETTERS =====
+    @ManyToOne
+    private University university;
+
+    // ===== GETTERS & SETTERS =====
 
     public Long getId() {
         return id;
@@ -41,5 +46,14 @@ public class Course {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    // 🔥 REQUIRED BY SERVICES & TESTS
+    public University getUniversity() {
+        return university;
+    }
+
+    public void setUniversity(University university) {
+        this.university = university;
     }
 }
