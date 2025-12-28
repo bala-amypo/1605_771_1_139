@@ -19,7 +19,7 @@ public class User {
     @Column(nullable = false)
     private String role;
 
-   
+    // ===== REQUIRED GETTERS / SETTERS =====
 
     public Long getId() {
         return id;
