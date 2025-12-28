@@ -11,11 +11,11 @@ public class Course {
 
     private String courseName;
 
-    private boolean active;
-
     private String university;
 
-    // ===== GETTERS & SETTERS =====
+    private boolean active;
+
+    // ===== Getters & Setters =====
 
     public Long getId() {
         return id;
@@ -33,19 +33,19 @@ public class Course {
         this.courseName = courseName;
     }
 
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
     public String getUniversity() {
         return university;
     }
 
     public void setUniversity(String university) {
         this.university = university;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }
