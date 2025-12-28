@@ -10,19 +10,13 @@ public class Course {
     private Long id;
 
     private String courseName;
-
-    private String university;
-
+    private int creditHours;
     private boolean active;
 
-    // ===== Getters & Setters =====
+    // ===== GETTERS / SETTERS =====
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getCourseName() {
@@ -33,12 +27,12 @@ public class Course {
         this.courseName = courseName;
     }
 
-    public String getUniversity() {
-        return university;
+    public int getCreditHours() {
+        return creditHours;
     }
 
-    public void setUniversity(String university) {
-        this.university = university;
+    public void setCreditHours(int creditHours) {
+        this.creditHours = creditHours;
     }
 
     public boolean isActive() {
