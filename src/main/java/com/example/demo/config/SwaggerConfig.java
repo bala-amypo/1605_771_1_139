@@ -12,9 +12,20 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
+              .info(new Info()
+                        .title("JWT Demo API")
+                        .version("1.0")
+                        .description("University Course Transfer System"))
                 // You need to change the port as per your server
                 .servers(List.of(
                         new Server().url("https://9129.pro604cr.amypo.ai")
                 ));
+                .components(new Components()
+                        .addSecuritySchemes("bearerAuth",
+                                new SecurityScheme()
+                                        .type(SecurityScheme.Type.HTTP)
+                                        .scheme("bearer")
+                                        .bearerFormat("JWT")));
+                .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
         }
 }
