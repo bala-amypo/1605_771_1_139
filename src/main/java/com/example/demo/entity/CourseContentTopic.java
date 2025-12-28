@@ -38,9 +38,6 @@ public class CourseContentTopic {
     public void setCourse(Course course) {
         this.course = course;
     }
-    public void setWeightPercentage(double weightPercentage) {
-    this.weightPercentage = weightPercentage;
-     }
-
+    
     
 }

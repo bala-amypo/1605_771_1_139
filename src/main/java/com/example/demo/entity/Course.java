@@ -84,8 +84,5 @@ public class Course {
     public void setUniversity(University university) {
         this.university = university;
     }
-    public void setCreditHours(int creditHours) {
-    this.creditHours = creditHours;
-    }
-
+    
 }
