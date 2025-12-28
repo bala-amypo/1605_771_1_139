@@ -27,7 +27,7 @@ public class Course {
     @JoinColumn(name = "university_id")
     private University university;
 
-    // ---------------- GETTERS & SETTERS ----------------
+
 
     public Long getId() {
         return id;
@@ -45,7 +45,6 @@ public class Course {
         this.code = code;
     }
 
-    // 🔴 THIS FIXES YOUR CURRENT ERROR
     public String getCourseName() {
         return courseName;
     }
@@ -85,4 +84,8 @@ public class Course {
     public void setUniversity(University university) {
         this.university = university;
     }
+    public void setCreditHours(int creditHours) {
+    this.creditHours = creditHours;
+    }
+
 }
