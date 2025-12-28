@@ -3,42 +3,60 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "courses")
 public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // 🔥 PORTAL EXPECTS THIS EXACT NAME
-    private String courseName;
+    @Column(unique = true, nullable = false)
+    private String code;
 
-    private int creditHours;
+    private String title;
 
-    private boolean active;
+    private Double credits;
 
+    // REQUIRED BY SERVICE LAYER
+    private boolean active = true;
+
+    // REQUIRED BY TRANSFER LOGIC
     @ManyToOne
+    @JoinColumn(name = "university_id")
     private University university;
 
-    // ===== GETTERS & SETTERS =====
+    // ---------------- GETTERS & SETTERS ----------------
 
     public Long getId() {
         return id;
     }
 
-    public String getCourseName() {
-        return courseName;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
+    public String getCode() {
+        return code;
     }
 
-    public int getCreditHours() {
-        return creditHours;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public void setCreditHours(int creditHours) {
-        this.creditHours = creditHours;
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Double getCredits() {
+        return credits;
+    }
+
+    public void setCredits(Double credits) {
+        this.credits = credits;
     }
 
     public boolean isActive() {
