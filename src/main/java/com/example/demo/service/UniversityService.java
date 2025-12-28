@@ -7,9 +7,14 @@ public interface UniversityService {
 
     University createUniversity(University university);
 
+    University updateUniversity(Long id, University university);
+
     University getUniversityById(Long id);
 
     List<University> getAllUniversities();
 
     void deleteUniversity(Long id);
+
+    // REQUIRED BY CONTROLLER
+    void deactivateUniversity(Long id);
 }
