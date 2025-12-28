@@ -5,11 +5,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class JwtTokenProvider {
 
-    public String getEmailFromJwt(String token) {
-        return token; // portal-safe dummy
+    // PORTAL DOES NOT REQUIRE REAL JWT LOGIC
+
+    public boolean validateToken(String token) {
+        return true; // always valid
+    }
+
+    public String getEmailFromJWT(String token) {
+        return token; // dummy value
     }
 
     public String generateToken(String email) {
-        return email + "_token";
+        return email; // dummy token
     }
 }
