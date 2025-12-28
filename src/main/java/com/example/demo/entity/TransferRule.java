@@ -49,7 +49,6 @@ public class TransferRule {
     public void setMinimumOverallPercentage(double minimumOverallPercentage) {
         this.minimumOverallPercentage = minimumOverallPercentage;
     }
-    
     public void setMinimumOverlapPercentage(double percentage) {
     this.minimumOverlapPercentage = percentage;
     }
