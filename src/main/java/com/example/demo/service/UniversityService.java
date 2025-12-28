@@ -1,26 +1,15 @@
 package com.example.demo.service;
+
 import com.example.demo.entity.University;
-import com.example.demo.repository.UniversityRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import java.util.List;
 
-@Service
-public class UniversityService {
+public interface UniversityService {
 
-    @Autowired
-    private UniversityRepository universityRepo;
+    University createUniversity(University university);
 
-    public University createUniversity(University u) {
-        if (u.getName() == null || u.getName().trim().isEmpty()) {
-            throw new IllegalArgumentException("Name required");
-        }
-        return universityRepo.save(u);
-    }
+    University getUniversityById(Long id);
 
-    public void deactivateUniversity(Long id) {
-        University u = universityRepo.findById(id)
-            .orElseThrow(() -> new RuntimeException("University not found"));
-        u.setActive(false);
-        universityRepo.save(u);
-    }
+    List<University> getAllUniversities();
+
+    void deleteUniversity(Long id);
 }
