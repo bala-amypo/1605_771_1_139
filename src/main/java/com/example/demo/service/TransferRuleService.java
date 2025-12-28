@@ -7,12 +7,14 @@ public interface TransferRuleService {
 
     TransferRule createRule(TransferRule rule);
 
-    TransferRule updateRule(Long id, TransferRule rule); // added
+    TransferRule updateRule(Long id, TransferRule rule);
 
     TransferRule getRuleById(Long id);
 
     List<TransferRule> getAllRules();
 
-    void deleteRule(Long id); // ensure this exists
+    void deleteRule(Long id);
 
-    TransferRule deactivateRule(Long id);
+    TransferRule deactivateRule(Long id); // <-- all methods declared
+
+} 
