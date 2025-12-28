@@ -15,5 +15,4 @@ public interface TransferRuleService {
 
     void deleteRule(Long id); // ensure this exists
 
-    TransferRule deactivateRule(Long id); // added
-}
+    TransferRule deactivateRule(Long id);
