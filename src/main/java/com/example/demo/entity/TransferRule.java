@@ -11,6 +11,9 @@ public class TransferRule {
 
     @Column
     private Double minimumOverlapPercentage; // fixed missing field
+     
+    @Column
+    private Boolean active = true;
 
     // Getters and setters
     public Double getMinimumOverlapPercentage() {
@@ -20,4 +23,11 @@ public class TransferRule {
     public void setMinimumOverlapPercentage(Double minimumOverlapPercentage) {
         this.minimumOverlapPercentage = minimumOverlapPercentage;
     }
+    public Boolean getActive() {
+    return active;
+    }
+
+     public void setActive(Boolean active) {
+    this.active = active;
+     }
 }
