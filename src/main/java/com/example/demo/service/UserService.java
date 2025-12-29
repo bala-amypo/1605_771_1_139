@@ -11,7 +11,6 @@ public interface UserService {
 
     List<User> getAllUsers();
 
-    // used by AuthController
     User findByEmail(String email);
 
     boolean existsByEmail(String email);
