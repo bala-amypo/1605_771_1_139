@@ -4,10 +4,8 @@ import com.example.demo.entity.University;
 import java.util.List;
 
 public interface UniversityService {
+
     University createUniversity(University university);
-    University updateUniversity(Long id, University university);
-    University getUniversityById(Long id);
-    void deleteUniversity(Long id);
+
     List<University> getAllUniversities();
-    University deactivateUniversity(Long id);
 }
