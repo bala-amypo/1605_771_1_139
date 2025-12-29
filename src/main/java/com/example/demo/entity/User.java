@@ -11,13 +11,9 @@ public class User {
     private Long id;
 
     private String email;
-
     private String password;
-
-    // ✅ ADD ROLE FIELD
     private String role;
 
-    // getters & setters
     public Long getId() {
         return id;
     }
@@ -29,7 +25,7 @@ public class User {
     public String getEmail() {
         return email;
     }
-
+    
     public void setEmail(String email) {
         this.email = email;
     }
@@ -42,11 +38,10 @@ public class User {
         this.password = password;
     }
 
-    // ✅ REQUIRED
     public String getRole() {
         return role;
     }
-
+    
     public void setRole(String role) {
         this.role = role;
     }
