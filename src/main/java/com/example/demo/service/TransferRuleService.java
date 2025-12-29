@@ -15,6 +15,7 @@ public interface TransferRuleService {
 
     void deleteRule(Long id);
 
-    TransferRule deactivateRule(Long id); // <-- all methods declared
+    TransferRule deactivateRule(Long id); 
+    List<TransferRule> getRulesForUniversities(Long sourceId, Long targetId);
 
 } 
