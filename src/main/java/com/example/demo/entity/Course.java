@@ -95,4 +95,7 @@ public class Course {
     public void setUniversity(University university) {
         this.university = university;
     }
+    public void setCourseCode(String courseCode) {
+    this.courseCode = courseCode;
+    }
 }

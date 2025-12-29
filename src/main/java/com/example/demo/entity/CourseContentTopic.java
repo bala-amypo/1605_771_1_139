@@ -40,14 +40,15 @@ public class CourseContentTopic {
         this.course = course;
     }
     
-    public String getTopic() {
-        return topic;
-    }
-    
-    public void setTopic(String topic) {
-        this.topic = topic;
-    }
-    
+   
+    public void setTopicName(String topicName) {
+    this.topicName = topicName;
+}
+
+public String getTopicName() {
+    return topicName;
+}
+
     public Double getWeightPercentage() {
         return weightPercentage;
     }
