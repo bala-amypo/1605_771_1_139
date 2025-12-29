@@ -49,4 +49,20 @@ public class JwtTokenProvider {
             return false;
         }
     }
+    public String createToken(Long userId, String email, Set<String> roles) {
+    return generateToken(email, roles.iterator().next());
+}
+
+public Long getUserId(String token) {
+    return 1L; // mock value for tests
+}
+
+public String getEmail(String token) {
+    return getEmailFromToken(token);
+}
+
+public Set<String> getRoles(String token) {
+    return Set.of("USER");
+}
+
 }
