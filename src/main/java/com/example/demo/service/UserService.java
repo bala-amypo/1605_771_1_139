@@ -8,4 +8,3 @@ public interface UserService {
     boolean existsByEmail(String email);
     User registerUser(String email, String password);
 }
-
