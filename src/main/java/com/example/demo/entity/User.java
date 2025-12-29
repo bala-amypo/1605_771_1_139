@@ -1,55 +1,84 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
 public class User {
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(unique = true, nullable = false)
+    
     private String email;
-
-    @Column(nullable = false)
     private String password;
-
-    @Column(nullable = false)
-    private String role;
-
-    // ===== REQUIRED GETTERS / SETTERS =====
-
+    private String roles;
+    
+    @OneToMany(mappedBy = "sourceUniversity", cascade = CascadeType.ALL)
+    private Set<TransferRule> sourceRules = new HashSet<>();
+    
+    @OneToMany(mappedBy = "targetUniversity", cascade = CascadeType.ALL)
+    private Set<TransferRule> targetRules = new HashSet<>();
+    
+    // Default constructor (required)
+    public User() {
+    }
+    
+    // Constructor matching test requirements: User(String, String, String)
+    public User(String email, String password, String roles) {
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
+    }
+    
+    // Getters and Setters
     public Long getId() {
         return id;
     }
-
+    
     public void setId(Long id) {
         this.id = id;
     }
-
+    
     public String getEmail() {
         return email;
     }
-
+    
     public void setEmail(String email) {
         this.email = email;
     }
-
+    
     public String getPassword() {
         return password;
     }
-
+    
     public void setPassword(String password) {
         this.password = password;
     }
-
-    public String getRole() {
-        return role;
+    
+    public String getRoles() {
+        return roles;
     }
-
-    public void setRole(String role) {
-        this.role = role;
+    
+    public void setRoles(String roles) {
+        this.roles = roles;
+    }
+    
+    public Set<TransferRule> getSourceRules() {
+        return sourceRules;
+    }
+    
+    public void setSourceRules(Set<TransferRule> sourceRules) {
+        this.sourceRules = sourceRules;
+    }
+    
+    public Set<TransferRule> getTargetRules() {
+        return targetRules;
+    }
+    
+    public void setTargetRules(Set<TransferRule> targetRules) {
+        this.targetRules = targetRules;
     }
 }
