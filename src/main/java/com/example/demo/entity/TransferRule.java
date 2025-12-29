@@ -29,6 +29,9 @@ public class TransferRule {
     @Column(name = "credit_hour_tolerance")
     private Integer creditHourTolerance;
     
+    @Column(name = "is_active")
+    private Boolean isActive = true;
+    
     // Default constructor
     public TransferRule() {
     }
@@ -80,5 +83,23 @@ public class TransferRule {
     
     public void setCreditHourTolerance(Integer creditHourTolerance) {
         this.creditHourTolerance = creditHourTolerance;
+    }
+    
+    public Boolean getIsActive() {
+        return isActive;
+    }
+    
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
+    }
+    
+    // Method for boolean check
+    public Boolean isActive() {
+        return this.isActive;
+    }
+    
+    // Setter with boolean parameter
+    public void setActive(boolean active) {
+        this.isActive = active;
     }
 }
