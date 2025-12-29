@@ -2,21 +2,29 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.TransferEvaluationResult;
 import com.example.demo.service.TransferEvaluationService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/evaluation")
+@RequestMapping("/transfer")
 public class TransferEvaluationController {
 
     @Autowired
-    private TransferEvaluationService evaluationService;
+    private TransferEvaluationService transferService;
 
-    @GetMapping("/{src}/{tgt}")
+    @GetMapping("/evaluate")
     public TransferEvaluationResult evaluate(
-            @PathVariable Long src,
-            @PathVariable Long tgt) {
+            @RequestParam Long sourceUniversityId,
+            @RequestParam Long targetUniversityId,
+            @RequestParam Long sourceCourseId,
+            @RequestParam Long targetCourseId) {
 
-        return evaluationService.evaluateTransfer(src, tgt);
+        return transferService.evaluateTransfer(
+                sourceUniversityId,
+                targetUniversityId,
+                sourceCourseId,
+                targetCourseId
+        );
     }
 }
