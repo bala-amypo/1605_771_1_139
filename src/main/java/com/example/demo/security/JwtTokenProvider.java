@@ -1,46 +1,64 @@
 package com.example.demo.security;
 
+import io.jsonwebtoken.*;
 import org.springframework.stereotype.Component;
-import java.util.Set;
+
+import java.util.Date;
 
 @Component
 public class JwtTokenProvider {
-    
-    public String createToken(Long userId, String email, Set<String> roles) {
-        // Simple token generation (enhance this for production)
-        return "jwt-token-" + userId + "-" + email;
-    }
-    
-    // Method required by AuthController
+
+    // ✅ Secret key (keep it safe!)
+    private final String jwtSecret = "yourSecretKey12345";
+
+    // ✅ Token validity (e.g., 1 hour)
+    private final long jwtExpirationMs = 3600000;
+
+    // ✅ Generate token
     public String generateToken(String email, String role) {
-        // Generate token with email and role
-        return "jwt-token-" + email + "-" + role;
+        return Jwts.builder()
+                .setSubject(email)
+                .claim("role", role)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
+                .signWith(SignatureAlgorithm.HS256, jwtSecret)
+                .compact();
     }
-    
+
+    // ✅ Validate token
     public boolean validateToken(String token) {
-        // Validate token (simple implementation)
-        return token != null && token.startsWith("jwt-token-");
+        try {
+            Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
+            return true;
+        } catch (SignatureException e) {
+            System.out.println("Invalid JWT signature: " + e.getMessage());
+        } catch (MalformedJwtException e) {
+            System.out.println("Invalid JWT token: " + e.getMessage());
+        } catch (ExpiredJwtException e) {
+            System.out.println("JWT token is expired: " + e.getMessage());
+        } catch (UnsupportedJwtException e) {
+            System.out.println("JWT token is unsupported: " + e.getMessage());
+        } catch (IllegalArgumentException e) {
+            System.out.println("JWT claims string is empty: " + e.getMessage());
+        }
+        return false;
     }
-    
+
+    // ✅ Get email (subject) from token
     public String getEmailFromToken(String token) {
-        // Extract email from token
-        if (token != null && token.startsWith("jwt-token-")) {
-            String[] parts = token.split("-");
-            return parts.length > 3 ? parts[3] : null;
-        }
-        return null;
+        Claims claims = Jwts.parser()
+                .setSigningKey(jwtSecret)
+                .parseClaimsJws(token)
+                .getBody();
+        return claims.getSubject();
     }
-    
-    public String getEmail(String token) {
-        return getEmailFromToken(token);
-    }
-    
-    public String getUserId(String token) {
-        // Extract user ID from token
-        if (token != null && token.startsWith("jwt-token-")) {
-            String[] parts = token.split("-");
-            return parts.length > 2 ? parts[2] : null;
-        }
-        return null;
+
+    // ✅ Optional: Get role from token
+    public String getRoleFromToken(String token) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(jwtSecret)
+                .parseClaimsJws(token)
+                .getBody();
+        return claims.get("role", String.class);
     }
 }
