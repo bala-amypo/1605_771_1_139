@@ -1,90 +1,77 @@
-package com.example.demo.config;
+package com.example.demo.security;
 
-import com.example.demo.security.JwtAuthenticationFilter;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import com.example.demo.entity.User;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 
-@Configuration
-public class SecurityConfig {
+import java.security.Key;
+import java.util.Date;
+import java.util.Map;
 
-    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+public class JwtUtil {
 
-    public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter) {
-        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+    private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    private final long expiration = 1000 * 60 * 60;
+
+    public String generateToken(Map<String, Object> claims, String subject) {
+        return Jwts.builder()
+                .setClaims(claims)
+                .setSubject(subject)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + expiration))
+                .signWith(key)
+                .compact();
     }
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
-        http
-            // ✅ Enable CORS
-            .cors(Customizer.withDefaults())
-
-            // ❌ Disable CSRF (JWT stateless)
-            .csrf(csrf -> csrf.disable())
-
-            // ❌ No session
-            .sessionManagement(session ->
-                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            )
-
-            // ✅ Authorization rules
-            .authorizeHttpRequests(auth -> auth
-                // Allow POST to register and login
-                .requestMatchers(HttpMethod.POST, "/auth/register", "/auth/login").permitAll()
-
-                // Allow OPTIONS for preflight requests
-                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-
-                // Swagger / API docs
-                .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**").permitAll()
-
-                // Everything else requires authentication
-                .anyRequest().authenticated()
-            )
-
-            // ✅ JWT Filter
-            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-
-        return http.build();
+    public String generateTokenForUser(User user) {
+        return Jwts.builder()
+                .claim("userId", user.getId())
+                .claim("email", user.getEmail())
+                .claim("role", user.getRole())
+                .setSubject(user.getEmail())
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + expiration))
+                .signWith(key)
+                .compact();
     }
 
-    // ✅ AuthenticationManager (required for login)
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
-        return configuration.getAuthenticationManager();
+    public ParsedJwt parseToken(String token) {
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+        return new ParsedJwt(claims);
     }
 
-    // ✅ Password encoder
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+    public String extractUsername(String token) {
+        return parseToken(token).getPayload().getSubject();
     }
 
-    // ✅ Global CORS configuration
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin("*");    // Allow all origins
-        configuration.addAllowedMethod("*");    // Allow GET, POST, PUT, DELETE, OPTIONS
-        configuration.addAllowedHeader("*");    // Allow all headers
-        configuration.setAllowCredentials(true); // Allow credentials
+    public String extractRole(String token) {
+        return parseToken(token).getPayload().get("role", String.class);
+    }
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
+    public Long extractUserId(String token) {
+        return parseToken(token).getPayload().get("userId", Long.class);
+    }
+
+    public boolean isTokenValid(String token, String username) {
+        return extractUsername(token).equals(username);
+    }
+
+    public static class ParsedJwt {
+
+        private final Claims payload;
+
+        public ParsedJwt(Claims payload) {
+            this.payload = payload;
+        }
+
+        public Claims getPayload() {
+            return payload;
+        }
     }
 }
