@@ -129,4 +129,16 @@ public class TransferEvaluationResult {
     public void setEvaluationResult(TransferEvaluationResult evaluationResult) {
         this.evaluationResult = evaluationResult;
     }
+    public void setEligible(boolean eligible) {
+    this.eligible = eligible;
+}
+
+public boolean isEligible() {
+    return eligible;
+}
+
+public void setOverlapPercentage(double overlapPercentage) {
+    this.overlapPercentage = overlapPercentage;
+}
+
 }
