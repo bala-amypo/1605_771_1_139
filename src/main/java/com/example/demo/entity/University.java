@@ -66,9 +66,14 @@ public class University {
         this.isActive = isActive;
     }
     
-    // Method required by tests
+    // Method for boolean check
     public Boolean isActive() {
         return this.isActive;
+    }
+    
+    // Setter with boolean parameter
+    public void setActive(boolean active) {
+        this.isActive = active;
     }
     
     public Set<TransferRule> getSourceRules() {
