@@ -16,6 +16,9 @@ public class Course {
     @Column(name = "credit_hours")
     private Integer creditHours;
     
+    @Column(name = "is_active")
+    private Boolean isActive = true;
+    
     @ManyToOne
     @JoinColumn(name = "university_id")
     private University university;
@@ -49,12 +52,35 @@ public class Course {
         this.name = name;
     }
     
+    // Alias method for getName()
+    public String getCourseName() {
+        return this.name;
+    }
+    
     public Integer getCreditHours() {
         return creditHours;
     }
     
     public void setCreditHours(Integer creditHours) {
         this.creditHours = creditHours;
+    }
+    
+    public Boolean getIsActive() {
+        return isActive;
+    }
+    
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
+    }
+    
+    // Method for boolean check
+    public Boolean isActive() {
+        return this.isActive;
+    }
+    
+    // Setter with boolean parameter
+    public void setActive(boolean active) {
+        this.isActive = active;
     }
     
     public University getUniversity() {
