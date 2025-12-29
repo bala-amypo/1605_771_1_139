@@ -11,10 +11,22 @@ public class JwtTokenProvider {
         return "jwt-token-" + userId + "-" + email;
     }
     
-    public String getEmail(String token) {
+    public boolean validateToken(String token) {
+        // Validate token (simple implementation)
+        return token != null && token.startsWith("jwt-token-");
+    }
+    
+    public String getEmailFromToken(String token) {
         // Extract email from token
-        String[] parts = token.split("-");
-        return parts.length > 3 ? parts[3] : null;
+        if (token != null && token.startsWith("jwt-token-")) {
+            String[] parts = token.split("-");
+            return parts.length > 3 ? parts[3] : null;
+        }
+        return null;
+    }
+    
+    public String getEmail(String token) {
+        return getEmailFromToken(token);
     }
     
     public String getUserId(String token) {
