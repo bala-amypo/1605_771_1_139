@@ -5,84 +5,63 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "courses")
 public class Course {
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    // REQUIRED BY TESTS
-    @Column(unique = true, nullable = false)
+    
     private String code;
-
-    // REQUIRED BY CourseServiceImpl (getCourseName)
-    private String courseName;
-
-    private String title;
-
-    private Double credits;
-
-    private boolean active = true;
-
+    private String name;
+    
+    @Column(name = "credit_hours")
+    private Integer creditHours;
+    
     @ManyToOne
     @JoinColumn(name = "university_id")
     private University university;
-
-
-
+    
+    // Default constructor
+    public Course() {
+    }
+    
+    // Getters and Setters
     public Long getId() {
         return id;
     }
-
+    
     public void setId(Long id) {
         this.id = id;
     }
-
+    
     public String getCode() {
         return code;
     }
-
+    
     public void setCode(String code) {
         this.code = code;
     }
-
-    public String getCourseName() {
-        return courseName;
+    
+    public String getName() {
+        return name;
     }
-
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
+    
+    public void setName(String name) {
+        this.name = name;
     }
-
-    public String getTitle() {
-        return title;
+    
+    public Integer getCreditHours() {
+        return creditHours;
     }
-
-    public void setTitle(String title) {
-        this.title = title;
+    
+    public void setCreditHours(Integer creditHours) {
+        this.creditHours = creditHours;
     }
-
-    public Double getCredits() {
-        return credits;
-    }
-
-    public void setCredits(Double credits) {
-        this.credits = credits;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
+    
     public University getUniversity() {
         return university;
     }
-
+    
     public void setUniversity(University university) {
         this.university = university;
     }
-    
 }
