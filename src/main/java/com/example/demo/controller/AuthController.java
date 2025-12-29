@@ -1,60 +1,34 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.*;
 import com.example.demo.entity.User;
 import com.example.demo.security.JwtTokenProvider;
 import com.example.demo.service.UserService;
 
-import org.springframework.security.authentication.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
 
-    private final AuthenticationManager authenticationManager;
-    private final JwtTokenProvider jwtTokenProvider;
-    private final UserService userService;
+    @Autowired
+    private UserService userService;
 
-    public AuthController(AuthenticationManager authenticationManager,
-                          JwtTokenProvider jwtTokenProvider,
-                          UserService userService) {
-        this.authenticationManager = authenticationManager;
-        this.jwtTokenProvider = jwtTokenProvider;
-        this.userService = userService;
-    }
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
 
-    // ✅ REGISTER
-    @PostMapping("/register")
-    public String register(@RequestBody RegisterRequest request) {
-
-        userService.register(
-                request.getName(),
-                request.getEmail(),
-                request.getPassword()
-        );
-
-        return "User registered successfully";
-    }
-
-    // ✅ LOGIN
     @PostMapping("/login")
-    public AuthResponse login(@RequestBody AuthRequest request) {
+    public Map<String, String> login(@RequestBody User user) {
 
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
-                        request.getPassword()
-                )
-        );
+        User dbUser = userService.findByEmail(user.getEmail());
 
-        User user = userService.findByEmail(request.getEmail());
+        String token = jwtTokenProvider.generateToken(dbUser.getEmail());
 
-        String token = jwtTokenProvider.generateToken(
-                user.getEmail(),
-                user.getRole()
-        );
-
-        return new AuthResponse(token, user.getEmail(), user.getRole());
+        Map<String, String> response = new HashMap<>();
+        response.put("token", token);
+        return response;
     }
 }
