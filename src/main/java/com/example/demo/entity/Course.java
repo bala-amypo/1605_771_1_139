@@ -57,6 +57,11 @@ public class Course {
         return this.name;
     }
     
+    // Alias method for setName()
+    public void setCourseName(String courseName) {
+        this.name = courseName;
+    }
+    
     public Integer getCreditHours() {
         return creditHours;
     }
