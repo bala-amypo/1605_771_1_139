@@ -22,11 +22,11 @@ public class User {
     @OneToMany(mappedBy = "targetUniversity", cascade = CascadeType.ALL)
     private Set<TransferRule> targetRules = new HashSet<>();
     
-    // Default constructor (required)
+    // Default constructor
     public User() {
     }
     
-    // Constructor matching test requirements: User(String, String, String)
+    // Constructor matching test requirements
     public User(String email, String password, String roles) {
         this.email = email;
         this.password = password;
@@ -64,6 +64,11 @@ public class User {
     
     public void setRoles(String roles) {
         this.roles = roles;
+    }
+    
+    // Method required by AuthController
+    public String getRole() {
+        return this.roles;
     }
     
     public Set<TransferRule> getSourceRules() {
