@@ -102,12 +102,14 @@ public class TransferRule {
     public void setActive(boolean active) {
         this.isActive = active;
     }
-    public void setMinimumOverlapPercentage(double percentage) {
-    this.minimumOverlapPercentage = percentage;
+  private Double minimumOverlapPercentage;
+
+public Double getMinimumOverlapPercentage() {
+    return minimumOverlapPercentage;
 }
 
-public double getMinimumOverlapPercentage() {
-    return minimumOverlapPercentage;
+public void setMinimumOverlapPercentage(Double minimumOverlapPercentage) {
+    this.minimumOverlapPercentage = minimumOverlapPercentage;
 }
 
 }
