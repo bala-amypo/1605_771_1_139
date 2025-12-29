@@ -1,40 +1,25 @@
 package com.example.demo.security;
 
-import io.jsonwebtoken.*;
 import org.springframework.stereotype.Component;
-
-import java.util.Date;
+import java.util.Set;
 
 @Component
 public class JwtTokenProvider {
-
-    private final String JWT_SECRET = "secret-key-demo";
-    private final long JWT_EXPIRATION = 24 * 60 * 60 * 1000; // 1 day
-
-    public String generateToken(String email, String role) {
-        return Jwts.builder()
-                .setSubject(email)
-                .claim("role", role)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + JWT_EXPIRATION))
-                .signWith(SignatureAlgorithm.HS256, JWT_SECRET)
-                .compact();
+    
+    public String createToken(Long userId, String email, Set<String> roles) {
+        // Simple token generation (enhance this for production)
+        return "jwt-token-" + userId + "-" + email;
     }
-
-    public String getEmailFromToken(String token) {
-        return Jwts.parser()
-                .setSigningKey(JWT_SECRET)
-                .parseClaimsJws(token)
-                .getBody()
-                .getSubject();
+    
+    public String getEmail(String token) {
+        // Extract email from token
+        String[] parts = token.split("-");
+        return parts.length > 3 ? parts[3] : null;
     }
-     
-    public boolean validateToken(String token) {
-        try {
-            Jwts.parser().setSigningKey(JWT_SECRET).parseClaimsJws(token);
-            return true;
-        } catch (Exception ex) {
-            return false;
-        }
+    
+    public String getUserId(String token) {
+        // Extract user ID from token
+        String[] parts = token.split("-");
+        return parts.length > 2 ? parts[2] : null;
     }
 }
