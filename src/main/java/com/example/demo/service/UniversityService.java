@@ -6,6 +6,8 @@ import java.util.List;
 public interface UniversityService {
 
     University createUniversity(University university);
-
+    University updateUniversity(Long id, University university);
+    University getUniversity(Long id);
     List<University> getAllUniversities();
+    void deleteUniversity(Long id);
 }
