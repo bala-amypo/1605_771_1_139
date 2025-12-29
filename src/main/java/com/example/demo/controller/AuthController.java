@@ -55,6 +55,7 @@ public class AuthController {
         }
 
         userService.registerUser(
+                
                 request.getEmail(),
                 request.getPassword()
         );
