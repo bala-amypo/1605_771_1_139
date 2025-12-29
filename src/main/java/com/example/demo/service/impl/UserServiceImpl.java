@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
     public User register(String name, String email, String password) {
 
         if (userRepository.existsByEmailIgnoreCase(email)) {
-            throw new RuntimeException("Email already registered");
+            throw new RuntimeException("Email already exists");
         }
 
         User user = new User();
