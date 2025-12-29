@@ -1,8 +1,6 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -16,11 +14,9 @@ public class User {
     private String password;
     private String roles;
     
-    @OneToMany(mappedBy = "sourceUniversity", cascade = CascadeType.ALL)
-    private Set<TransferRule> sourceRules = new HashSet<>();
-    
-    @OneToMany(mappedBy = "targetUniversity", cascade = CascadeType.ALL)
-    private Set<TransferRule> targetRules = new HashSet<>();
+    // REMOVED: These relationships don't belong here
+    // User doesn't have a direct relationship with TransferRule
+    // TransferRule connects Universities, not Users
     
     // Default constructor
     public User() {
@@ -69,21 +65,5 @@ public class User {
     // Method required by AuthController
     public String getRole() {
         return this.roles;
-    }
-    
-    public Set<TransferRule> getSourceRules() {
-        return sourceRules;
-    }
-    
-    public void setSourceRules(Set<TransferRule> sourceRules) {
-        this.sourceRules = sourceRules;
-    }
-    
-    public Set<TransferRule> getTargetRules() {
-        return targetRules;
-    }
-    
-    public void setTargetRules(Set<TransferRule> targetRules) {
-        this.targetRules = targetRules;
     }
 }
