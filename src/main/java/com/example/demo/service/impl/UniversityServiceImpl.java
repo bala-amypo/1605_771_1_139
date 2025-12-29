@@ -1,51 +1,34 @@
-package com.example.demo.service.impl;
-
-import com.example.demo.entity.University;
-import com.example.demo.repository.UniversityRepository;
-import com.example.demo.service.UniversityService;
-
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-
 @Service
 public class UniversityServiceImpl implements UniversityService {
 
-    private final UniversityRepository universityRepository;
+    private final UniversityRepository repo;
 
-    public UniversityServiceImpl(UniversityRepository universityRepository) {
-        this.universityRepository = universityRepository;
+    public UniversityServiceImpl(UniversityRepository repo) {
+        this.repo = repo;
     }
 
-    @Override
-    public University createUniversity(University university) {
-        university.setActive(true);
-        return universityRepository.save(university);
+    public University createUniversity(University u) {
+        u.setActive(true);
+        return repo.save(u);
     }
 
-    @Override
     public University getUniversity(Long id) {
-        return universityRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("University not found"));
+        return repo.findById(id).orElse(null);
     }
 
-    @Override
     public List<University> getAllUniversities() {
-        return universityRepository.findAll();
+        return repo.findAll();
     }
 
-    @Override
-    public University updateUniversity(Long id, University university) {
-        University existing = getUniversity(id);
-        existing.setName(university.getName());
-        existing.setActive(university.isActive());
-        return universityRepository.save(existing);
+    public University updateUniversity(Long id, University u) {
+        University db = getUniversity(id);
+        db.setName(u.getName());
+        return repo.save(db);
     }
 
-    @Override
     public void deactivateUniversity(Long id) {
-        University university = getUniversity(id);
-        university.setActive(false);
-        universityRepository.save(university);
+        University u = getUniversity(id);
+        u.setActive(false);
+        repo.save(u);
     }
 }
