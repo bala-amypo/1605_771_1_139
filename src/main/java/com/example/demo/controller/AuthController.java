@@ -25,7 +25,11 @@ public class AuthController {
 
         User dbUser = userService.findByEmail(user.getEmail());
 
-        String token = jwtTokenProvider.generateToken(dbUser.getEmail());
+        String token = jwtTokenProvider.generateToken(
+        user.getEmail(),
+        user.getRole()
+        );
+
 
         Map<String, String> response = new HashMap<>();
         response.put("token", token);
