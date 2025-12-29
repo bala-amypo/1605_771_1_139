@@ -105,7 +105,10 @@ public class TransferEvaluationResult {
     public void setEligibleCourses(List<TransferEvaluationResult> eligibleCourses) {
         this.eligibleCourses = eligibleCourses;
     }
-    
+    public double getOverlapPercentage() {
+    return overlapPercentage;
+}
+
     // Method required by tests
     public List<TransferEvaluationResult> getIsEligibleForTransfer() {
         return this.eligibleCourses;
