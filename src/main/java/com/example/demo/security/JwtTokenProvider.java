@@ -11,6 +11,12 @@ public class JwtTokenProvider {
         return "jwt-token-" + userId + "-" + email;
     }
     
+    // Method required by AuthController
+    public String generateToken(String email, String role) {
+        // Generate token with email and role
+        return "jwt-token-" + email + "-" + role;
+    }
+    
     public boolean validateToken(String token) {
         // Validate token (simple implementation)
         return token != null && token.startsWith("jwt-token-");
@@ -31,7 +37,10 @@ public class JwtTokenProvider {
     
     public String getUserId(String token) {
         // Extract user ID from token
-        String[] parts = token.split("-");
-        return parts.length > 2 ? parts[2] : null;
+        if (token != null && token.startsWith("jwt-token-")) {
+            String[] parts = token.split("-");
+            return parts.length > 2 ? parts[2] : null;
+        }
+        return null;
     }
 }
