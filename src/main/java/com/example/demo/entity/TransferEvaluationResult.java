@@ -24,6 +24,13 @@ public class TransferEvaluationResult {
     @JoinColumn(name = "source_course_id")
     private Course sourceCourse;
     
+    @ManyToOne
+    @JoinColumn(name = "target_course_id")
+    private Course targetCourse;
+    
+    @Column(name = "is_eligible")
+    private Boolean isEligible = false;
+    
     @OneToMany(mappedBy = "evaluationResult", cascade = CascadeType.ALL)
     private List<TransferEvaluationResult> eligibleCourses = new ArrayList<>();
     
@@ -68,6 +75,27 @@ public class TransferEvaluationResult {
     
     public void setSourceCourse(Course sourceCourse) {
         this.sourceCourse = sourceCourse;
+    }
+    
+    public Course getTargetCourse() {
+        return targetCourse;
+    }
+    
+    public void setTargetCourse(Course targetCourse) {
+        this.targetCourse = targetCourse;
+    }
+    
+    public Boolean getIsEligible() {
+        return isEligible;
+    }
+    
+    public void setIsEligible(Boolean isEligible) {
+        this.isEligible = isEligible;
+    }
+    
+    // Setter with boolean parameter
+    public void setEligible(boolean eligible) {
+        this.isEligible = eligible;
     }
     
     public List<TransferEvaluationResult> getEligibleCourses() {
