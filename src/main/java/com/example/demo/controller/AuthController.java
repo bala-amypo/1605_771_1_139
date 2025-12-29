@@ -1,13 +1,10 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.AuthRequest;
-import com.example.demo.dto.AuthResponse;
+import com.example.demo.dto.*;
 import com.example.demo.entity.User;
 import com.example.demo.security.JwtTokenProvider;
 import com.example.demo.service.UserService;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,41 +24,37 @@ public class AuthController {
         this.userService = userService;
     }
 
+    // ✅ REGISTER
+    @PostMapping("/register")
+    public String register(@RequestBody RegisterRequest request) {
+
+        userService.register(
+                request.getName(),
+                request.getEmail(),
+                request.getPassword()
+        );
+
+        return "User registered successfully";
+    }
+
     // ✅ LOGIN
     @PostMapping("/login")
     public AuthResponse login(@RequestBody AuthRequest request) {
 
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        request.getEmail(), request.getPassword())
+                        request.getEmail(),
+                        request.getPassword()
+                )
         );
 
         User user = userService.findByEmail(request.getEmail());
 
         String token = jwtTokenProvider.generateToken(
-                user.getEmail(), user.getRole());
-
-        return new AuthResponse(token, user.getEmail(), user.getRole());
-    }
-
-    // ✅ REGISTER
-    @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody AuthRequest request) {
-
-        if (userService.existsByEmail(request.getEmail())) {
-            return ResponseEntity
-                    .status(HttpStatus.BAD_REQUEST)
-                    .body("Email already registered");
-        }
-
-        userService.registerUser(
-                
-                request.getEmail(),
-                request.getPassword()
+                user.getEmail(),
+                user.getRole()
         );
 
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body("User registered successfully");
+        return new AuthResponse(token, user.getEmail(), user.getRole());
     }
 }
