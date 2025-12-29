@@ -7,8 +7,6 @@ import com.example.demo.service.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -22,42 +20,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User register(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        if (user.getRole() == null) {
-            user.setRole("ROLE_USER");
+    public User register(String name, String email, String password) {
+
+        if (userRepository.existsByEmailIgnoreCase(email)) {
+            throw new RuntimeException("Email already registered");
         }
+
+        User user = new User();
+        user.setName(name);
+        user.setEmail(email);
+        user.setPassword(passwordEncoder.encode(password));
+        user.setRole("ROLE_USER");
+
         return userRepository.save(user);
-    }
-
-    @Override
-    public User getUserById(Long id) {
-        return userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-    }
-
-    @Override
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
     }
 
     @Override
     public User findByEmail(String email) {
         return userRepository.findByEmailIgnoreCase(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
-    }
-
-    @Override
-    public boolean existsByEmail(String email) {
-        return userRepository.existsByEmailIgnoreCase(email);
-    }
-
-    @Override
-    public User registerUser(String email, String password) {
-        User user = new User();
-        user.setEmail(email);
-        user.setPassword(passwordEncoder.encode(password));
-        user.setRole("ROLE_USER");
-        return userRepository.save(user);
     }
 }

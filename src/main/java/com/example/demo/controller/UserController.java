@@ -2,31 +2,25 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.User;
 import com.example.demo.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
+
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/users")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-    @PostMapping("/register")
-    public ResponseEntity<User> register(@RequestBody User user) {
-        // The error was likely here. We return ResponseEntity<User> to match the service return type.
-        return ResponseEntity.ok(userService.register(user));
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id) {
-        return ResponseEntity.ok(userService.getUserById(id));
-    }
-
-    @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
-        return ResponseEntity.ok(userService.getAllUsers());
+    // ✅ Get logged-in user profile (using JWT token)
+    @GetMapping("/me")
+    public User getMyProfile(Principal principal) {
+        // principal.getName() → email (from JWT)
+        return userService.findByEmail(principal.getName());
     }
 }
