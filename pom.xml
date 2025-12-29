@@ -97,7 +97,7 @@
     <scope>runtime</scope>
 </dependency>
 
-</dependency>
+
 		<!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
      <dependency>
         <groupId>com.mysql</groupId>
