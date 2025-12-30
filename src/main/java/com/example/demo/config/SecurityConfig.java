@@ -16,24 +16,18 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                // ✅ Swagger (TEST SAFE)
                 .requestMatchers(
                         "/swagger-ui/**",
                         "/v3/api-docs/**",
-                        "/swagger-ui.html"
+                        "/swagger-ui.html",
+                        "/h2-console/**"
                 ).permitAll()
-
-                // H2 console
-                .requestMatchers("/h2-console/**").permitAll()
-
-                // Auth APIs
-                .requestMatchers("/api/auth/**").permitAll()
-
-                // Others secured
                 .anyRequest().authenticated()
             )
-            .formLogin(form -> form.disable()) // swagger + api safe
-            .httpBasic(basic -> basic.disable())
+            // ✅ BUILT-IN LOGIN (NO DTO)
+            .formLogin(form -> form
+                .permitAll()
+            )
             .headers(headers -> headers.frameOptions(frame -> frame.disable()));
 
         return http.build();
