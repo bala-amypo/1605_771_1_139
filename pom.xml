@@ -30,7 +30,8 @@
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
-         <!-- Spring Boot Core -->
+
+    <!-- Spring Boot -->
     <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-web</artifactId>
@@ -47,7 +48,7 @@
         <artifactId>spring-boot-starter-security</artifactId>
     </dependency>
 
-    <!-- Swagger / OpenAPI (Boot 3.3 SAFE) -->
+    <!-- Swagger (Boot 3.3 SAFE) -->
     <dependency>
         <groupId>org.springdoc</groupId>
         <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
@@ -73,13 +74,23 @@
         <scope>runtime</scope>
     </dependency>
 
-    <!-- Database -->
+    <!-- H2 (MANDATORY for portal) -->
+    <dependency>
+        <groupId>com.h2database</groupId>
+        <artifactId>h2</artifactId>
+    </dependency>
+
+    <!-- MySQL (Optional, Local only) -->
     <dependency>
         <groupId>com.mysql</groupId>
         <artifactId>mysql-connector-j</artifactId>
         <version>8.4.0</version>
+        <scope>runtime</scope>
     </dependency>
+
 </dependencies>
+
+        
 	<build>
 		<plugins>
 			<plugin>
